@@ -639,7 +639,7 @@ IN: **sensor_adapter event io_level <switch>**
         - *sensor_adapter event io_level on* ：打开传感器转接板的电平跳变事件推送、
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-传感器转接板事件上报控制
+传感器转接板事件上报数据
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 OUT: *sensor_adapter event io_level (<id>, <port_num>, <io_level>)*
@@ -653,10 +653,6 @@ OUT: *sensor_adapter event io_level (<id>, <port_num>, <io_level>)*
         - *io_level*：当前的逻辑电平值
     - 示例
         - *sensor_adapter event io_level (1, 1, 0)* ：当前 1 号转接板的 1 号 IO 的逻辑电平跳变为 0
-
-^^^^^^^^^^^^^^^^^^^^^^^^^
-传感器转接板事件上报数据
-^^^^^^^^^^^^^^^^^^^^^^^^^
 
 *************************
 红外深度传感器控制
@@ -863,7 +859,7 @@ IN: **robotic_gripper close [leve <level_num>]**
     力度越大，运动速度越快，夹取力越大；反之。
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-机械臂相对位置运动控制
+机械爪开合状态查询
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 IN: **robotic_gripper status ?**
@@ -873,10 +869,10 @@ IN: **robotic_gripper status ?**
     - 参数
         - *None*
     - 返回值
-        - *status*  : 机械爪当前的开合状态
-            > ``0`` 机械爪完全闭合
-            > ``1`` 机械爪既没有完全闭合，也没有完全张开
-            > ``2`` 机械爪完全张开
+        - *status* : 机械爪当前的开合状态
+            - ``0`` 机械爪完全闭合
+            - ``1`` 机械爪既没有完全闭合，也没有完全张开
+            - ``2`` 机械爪完全张开
     - 示例
         - IN: *robotic_gripper status ?* ：获取机械爪的开合状态
         - OUT: *2* ：当前查询的机械爪状态为张开

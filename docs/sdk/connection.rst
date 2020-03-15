@@ -438,7 +438,7 @@ UART 连接
 			if msg.upper() == 'Q':
 				break
 
-		 	ser.write(msg)
+			ser.write(msg.encode('utf-8'))
 
 		 	recv = ser.read()
 

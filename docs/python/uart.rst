@@ -13,7 +13,7 @@ UART
 
     :return: 无
 
-    :示例: ``serial_ctrl.serial_config(9600, 'cs8', 'none', '1')``
+    :示例: ``serial_ctrl.serial_config(9600, 'cs8', 'none', 1)``
 
     :示例说明: 设置串口的波特率为 9600，数据位 8 位，不使用奇偶校验，停止位为 1 位
 
@@ -41,24 +41,50 @@ UART
 
     :示例说明: 向串口写入 ``'RoboMaster EP'``
 
-.. function:: serial_ctrl.writ_numbers(key, value)
+.. function:: serial_ctrl.write_number(value)
+
+    :描述: 将数字参数转换成字符串，并通过串口发送出去
+
+    :param int value: 需要发送的值
+
+    :return: 无
+
+    :示例: ``serial_ctrl.write_number(12)``
+
+    :示例说明: 向串口中写入字符串 ``'12'``
+
+.. function:: serial_ctrl.write_numbers(value1, value2, value3...)
+
+    :描述: 将数字列表转换成字符串，并通过串口发送出去
+
+    :param int value1: 需要发送数字列表的值
+    :param int value2: 需要发送数字列表的值
+    :param int value3: 需要发送数字列表的值
+
+    :return: 无
+
+    :示例: ``serial_ctrl.write_numbers(12,13,14)``
+
+    :示例说明: 向串口中写入字符串 ``'12,13,14'``
+
+.. function:: serial_ctrl.write_value(key, value)
 
     :描述: 将参数以键值对的形式组成字符串，并通过串口发送出去
 
     :param string key: 需要发送的关键字
-    :param uint32 value: 需要发送的值
+    :param int value: 需要发送的值
 
     :return: 无
 
-    :示例: ``serial_ctrl.writ_numbers('x', 12)``
+    :示例: ``serial_ctrl.write_value('x', 12)``
 
     :示例说明: 向串口中写入字符串 ``'x:12'``
 
-.. function:: serial_ctrl.read_line()
+.. function:: serial_ctrl.read_line([timeout])
 
     :描述: 从串口中读取以 ``'\n'`` 结尾的字符串
 
-    :param void: 无
+    :param float timeout: 可选，超时时间，单位为秒，默认为永久阻塞
 
     :return: 通过串口读取到的字符串
     :rtype: string
@@ -67,24 +93,25 @@ UART
 
     :示例说明: 从串口读取一行以 ``'\n'`` 结尾的字符串
 
-.. function:: serial_ctrl.read_string()
+.. function:: serial_ctrl.read_string([timeout])
 
     :描述: 从串口中读取字符串（字符串可以不以 ``'\n'`` 结尾）
 
-    :param void: 无
+    :param float timeout: 可选，超时时间，单位为秒，默认为永久阻塞
 
     :return: 通过串口读取到的字符串
     :rtype: string
 
-    :示例: ``recv = serial_ctrl.read_line()``
+    :示例: ``recv = serial_ctrl.read_string()``
 
     :示例说明: 从串口读取一个字符串
 
-.. function:: serial_ctrl.read_until(stop_sig)
+.. function:: serial_ctrl.read_until(stop_sig, [timeout])
 
     :描述: 从串口中读取字符串，直到匹配到指定的结束字符 ``'stop_sig'``
 
     :param stop_sig: 指定的结束字符，参数类型为字符，范围为[ ``'\n'`` | ``'$'`` | ``'#'`` | ``'.'`` | ``':'`` | ``';'`` ]
+    :param float timeout: 可选，超时时间，单位为秒，默认为永久阻塞
 
     :return: 通过串口读取到的匹配字符串
     :rtype: string

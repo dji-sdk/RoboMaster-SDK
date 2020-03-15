@@ -6,10 +6,11 @@
 控制命令
 *****************
 
-IN：**<obj> <command> <params> [<seq>]**
+IN：**<obj> <command> <params> [<seq>]**;
 
     - 描述
         - 控制命令协议格式，一般用来与机器人做控制上的交互
+        - 以 ``；`` 作为结束符
     - 参数
         - *obj* (str): 控制对象字符串
         - *command* (str): 控制命令字符串
@@ -77,13 +78,18 @@ OUT: **robot ip <addr>**
 视频流
 *****************
 
-OUT: H.264 编码实时视频流数据，需要对视频流数据进行正确的解码操作才能实时显示视频画面。
+OUT: H.264编码实时视频流数据 (1280*720 @ 30FPS)，需要对视频流数据进行正确的解码操作才能实时显示视频画面。
 
 *****************
 音频流
 *****************
 
 OUT: Opus 编码实时音频流数据，需要对音频流数据进行正确的解码操作才能实时播放音频。
+
+.. tip:: Decoder
+
+    接收端音视频解码示例代码请参见 `Stream Decoder <https://github.com/dji-sdk/RoboMaster-SDK/tree/master/sample_code/RoboMasterEP/stream/>`_
+
 
 .. note:: IN/OUT
 
