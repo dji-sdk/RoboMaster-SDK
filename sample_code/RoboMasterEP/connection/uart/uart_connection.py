@@ -13,18 +13,18 @@ ser.timeout = 0.2
 # open uart
 ser.open()
 
-ser.write('command')
+ser.write('command'.encode('utf-8'))
 print('send data to ser.  : command')
 recv = ser.read()
 print('recv data from ser.: %s'%recv)
 
 
-ser.write('version')
+ser.write('version'.encode('utf-8'))
 print('send data to ser.  : version ?')
 recv = ser.read()
 print('recv data from ser.: %s'%recv)
 
-ser.write('quit')
+ser.write('quit'.encode('utf-8'))
 print('send data to ser.  : quit')
 recv = ser.read()
 print('recv data from ser.: %s'%recv)

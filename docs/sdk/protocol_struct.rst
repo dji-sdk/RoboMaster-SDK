@@ -6,10 +6,11 @@
 控制命令
 *****************
 
-IN：**<obj> <command> <params> [<seq>]**
+IN：**<obj> <command> <params> [<seq>]**；
 
     - 描述
         - 控制命令協議格式，一般用来與机器人進行控制上的交互
+        - 以 ``；`` 作爲結束符
     - 參數
         - *obj* (str): 控制物件字符串
         - *command* (str): 控制命令字符串
@@ -77,13 +78,17 @@ OUT: **robot ip <addr>**
 影片流
 *****************
 
-OUT: H.264 編碼即時影片流數據，需要對影片流數據進行正確解碼操作才能即時顯示影片畫面。
+OUT: H.264 編碼即時影片流數據（1280×720 @ 30FPS），需要對影片流數據進行正確解碼操作才能即時顯示影片畫面。
 
 *****************
 音訊流
 *****************
 
 OUT: Opus 編碼即時音訊流數據，需要對音訊流數據進行正確解碼操作才能即時播放音訊。
+
+.. tips:: Decoder
+
+    接收端音訊影片解碼代碼請參見：`Stream Decoder <https://github.com/dji-sdk/RoboMaster-SDK/tree/master/sample_code/RoboMasterEP/stream/>`_
 
 .. note:: IN/OUT
 

@@ -13,7 +13,7 @@ UART
 
     :return: 無
 
-    :示例: ``serial_ctrl.serial_config(9600, 'cs8', 'none', '1')``
+    :示例: ``serial_ctrl.serial_config(9600, 'cs8', 'none', 1)``
 
     :示例說明: 設定串口的傳送速率為 9600，數據位元 8 位，不使用同位，停止位為 1 位
 
@@ -41,24 +41,50 @@ UART
 
     :示例說明: 向串口寫入 ``'RoboMaster EP'``
 
-.. function:: serial_ctrl.writ_numbers(key, value)
+.. function:: serial_ctrl.write_number(value)
 
-    :描述: 將參數以鍵值對的形式組成字串，並通過串口發送出去
+    :描述: 將數字參數轉換成字符串，並通過串口發送出去
 
-    :param string key: 需要發送的關鍵字
-    :param uint32 value: 需要發送的值
+    :param int value: 需要發送的值
 
     :return: 無
 
-    :示例: ``serial_ctrl.writ_numbers('x', 12)``
+    :示例: ``serial_ctrl.write_number(12)``
 
-    :示例說明: 向串口中寫入字符串 ``'x:12'``
+    :示例説明: 向串口中寫入字符串 ``'12'``
 
-.. function:: serial_ctrl.read_line()
+.. function:: serial_ctrl.write_numbers(value1, value2, value3...)
+
+    :描述: 將數字列表轉換成字符串，並通過串口發送出去
+
+    :param int value1: 需要發送數字列表的值
+    :param int value2: 需要發送數字列表的值
+    :param int value3: 需要發送數字列表的值
+
+    :return: 無
+
+    :示例: ``serial_ctrl.write_numbers(12,13,14)``
+
+    :示例説明: 向串口中寫入字符串 ``'12,13,14'``
+
+.. function:: serial_ctrl.write_value(key, value)
+
+    :描述: 將參數以鍵值對的形式組成字符串，並通過串口發送出去
+
+    :param string key: 需要發送的關鍵字
+    :param int value: 需要發送的值
+
+    :return: 無
+
+    :示例: ``serial_ctrl.write_value('x', 12)``
+
+    :示例説明: 向串口中寫入字符串 ``'x:12'``
+
+.. function:: serial_ctrl.read_line([timeout])
 
     :描述: 從串口中讀取以 ``'\n'`` 結尾的字符串
 
-    :param void: 無
+    :param float timeout: 可選，超時時間，單位為秒，默認為永久阻塞
 
     :return: 通過串口讀取到的字符串
     :rtype: string
@@ -67,24 +93,25 @@ UART
 
     :示例說明: 從串口讀取一行以 ``'\n'`` 結尾的字符串
 
-.. function:: serial_ctrl.read_string()
+.. function:: serial_ctrl.read_string([timeout])
 
     :描述: 從串口中讀取字符串（字符串可以不以 ``'\n'`` 結尾）
 
-    :param void: 無
+    :param float timeout: 可選，超時時間，單位為秒，默認為永久阻塞
 
     :return: 通過串口讀取到的字符串
     :rtype: string
 
-    :示例: ``recv = serial_ctrl.read_line()``
+    :示例: ``recv = serial_ctrl.read_string()``
 
     :示例說明: 從串口讀取一個字符串
 
-.. function:: serial_ctrl.read_until(stop_sig)
+.. function:: serial_ctrl.read_until(stop_sig, [timeout])
 
     :描述: 從串口中讀取字符串，直到匹配到指定的結束字符 ``'stop_sig'``
 
     :param stop_sig: 指定的結束字符，參數類型為字符，範圍為[ ``'\n'`` | ``'$'`` | ``'#'`` | ``'.'`` | ``':'`` | ``';'`` ]
+    :param float timeout: 可選，超時時間，單位為秒，默認為永久阻塞
 
     :return: 通過串口讀取到的匹配字符串
     :rtype: string
