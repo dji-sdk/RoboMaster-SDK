@@ -225,7 +225,7 @@ IN：**chassis push {[position <switch> pfreq <freq>][attitude <switch> afreq <f
 OUT: **chassis push <attr> <data>**
 
     - 描述
-        - 当用户使能底盘信息推送后，机器人会以设置的频率向用户推送相应信息
+        - 当用户打开底盘信息推送后，机器人会以设置的频率向用户推送相应信息
     - 参数
         - *attr* (:data:`chassis_push_attr_enum`) : 订阅的属性名称
         - *data* : 订阅的属性数据
@@ -362,7 +362,7 @@ IN: **gimbal push <attr> <switch> [afreq <freq_all>]**
 OUT: **gimabal push <attr> <data>**
 
     - 描述
-        - 当用户使能云台信息推送后，机器人会以设置的频率向用户推送相应信息
+        - 当用户打开云台信息推送后，机器人会以设置的频率向用户推送相应信息
     - 参数
         - *attr* (:data:`gimbal_push_attr_enum`) : 订阅的属性名称
         - *data*: 订阅的属性数据
@@ -508,7 +508,7 @@ OUT: **sound event <attr> <data>**
 
     - 描述
         - 当发生特定声音事件时，可以从事件推送端口接收到此数据
-        - 使能该事件请参见 `声音识别事件上报控制`_
+        - 打开该事件请参见 `声音识别事件上报控制`_
     - 参数
         - *attr* (:data:`sound_event_attr_enum`):  事件属性名称
         - *data* ：事件属性数据
