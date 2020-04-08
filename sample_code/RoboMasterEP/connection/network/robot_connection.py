@@ -115,8 +115,8 @@ class RobotConnection(object):
 
     def start_audio_recv(self):
         assert not self.is_shutdown, 'CONECTION INVALID'
-        if self.video_socket not in self.cmd_socket_list:
-            self.video_socket.settimeout(5)
+        if self.audio_socket not in self.cmd_socket_list:
+            self.audio_socket.settimeout(5)
             try:
                 self.audio_socket.connect((self.robot_ip, RobotConnection.AUDIO_PORT))
             except Exception as e:
@@ -158,7 +158,7 @@ class RobotConnection(object):
         If optional arg 'timeout' is None (the default), block if necessary until
         get data from control port. If 'timeout' is a non-negative number,
         it blocks at most 'timeout' seconds and reuturn None if no data back from
-        robot video port within the time. Otherwise, return the data immediately.
+        robot audio port within the time. Otherwise, return the data immediately.
  
         If optional arg 'latest_data' is set to True, it will return the latest
         data, instead of the data in queue tail.
