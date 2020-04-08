@@ -46,7 +46,7 @@ class RobotLiveview(object):
 
         self.command_ack_list = []
 
-        self.is_shotdown = True
+        self.is_shutdown = True
 
     def open(self):
         if self.connection_type is ConnectionType.WIFI_DIRECT:
