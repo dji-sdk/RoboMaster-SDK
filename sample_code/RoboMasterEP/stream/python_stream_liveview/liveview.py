@@ -17,10 +17,12 @@ import robot_connection
 import enum
 import queue
 
+
 class ConnectionType(enum.Enum):
     WIFI_DIRECT = 1
     WIFI_NETWORKING = 2
     USB_DIRECT = 3
+
 
 class RobotLiveview(object):
     WIFI_DIRECT_IP = '192.168.2.1'
@@ -46,7 +48,7 @@ class RobotLiveview(object):
 
         self.command_ack_list = []
 
-        self.is_shotdown = True
+        self.is_shutdown = True
 
     def open(self):
         if self.connection_type is ConnectionType.WIFI_DIRECT:
@@ -185,6 +187,7 @@ class RobotLiveview(object):
 
         stream.stop_stream()
         stream.close()
+
 
 def test():
 
