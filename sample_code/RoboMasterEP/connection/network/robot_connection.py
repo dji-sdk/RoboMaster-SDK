@@ -140,10 +140,10 @@ class RobotConnection(object):
 
     def recv_video_data(self, timeout=None, latest_data=False):
         """
-        Receive control data
+        Receive video data
 
         If optional arg 'timeout' is None (the default), block if necessary until
-        get data from control port. If 'timeout' is a non-negative number,
+        get data from video port. If 'timeout' is a non-negative number,
         it blocks at most 'timeout' seconds and reuturn None if no data back from
         robot video port within the time. Otherwise, return the data immediately.
  
@@ -155,12 +155,12 @@ class RobotConnection(object):
 
     def recv_audio_data(self, timeout=None, latest_data=False):
         """
-        Receive control data
+        Receive audio data
 
         If optional arg 'timeout' is None (the default), block if necessary until
-        get data from control port. If 'timeout' is a non-negative number,
+        get data from audio port. If 'timeout' is a non-negative number,
         it blocks at most 'timeout' seconds and reuturn None if no data back from
-        robot video port within the time. Otherwise, return the data immediately.
+        robot audio port within the time. Otherwise, return the data immediately.
  
         If optional arg 'latest_data' is set to True, it will return the latest
         data, instead of the data in queue tail.
