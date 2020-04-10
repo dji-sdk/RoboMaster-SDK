@@ -117,11 +117,11 @@ IN: **chassis move { [x <distance_x>] | [y <distance_y>] | [z <degree_z>] } [vxy
     - 描述
         - 控制底盘运动当指定位置，坐标轴原点为当前位置
     - 参数
-        - *distance_x* (int:[-5, 5]): x 轴向运动距离，单位 m
-        - *distance_y* (int:[-5, 5]): y 轴向运动距离，单位 m
+        - *distance_x* (float:[-5, 5]): x 轴向运动距离，单位 m
+        - *distance_y* (float:[-5, 5]): y 轴向运动距离，单位 m
         - *degree_z* (int:[-1800, 1800]): z 轴向旋转角度，单位 °
-        - *speed_xy* (int:(0, 3.5]): xy 轴向运动速度，单位 m/s
-        - *speed_z* (int:(0, 600]): z 轴向旋转速度， 单位 m/s
+        - *speed_xy* (float:(0, 3.5]): xy 轴向运动速度，单位 m/s
+        - *speed_z* (float:(0, 600]): z 轴向旋转速度， 单位 °/s
     - 示例
         - *chassis move x 0.1 y 0.2* ：以当前位置为坐标原点，向 x 轴运动 0.1 m，向 y 轴运动 0.2 m
 
@@ -280,7 +280,7 @@ IN: **gimbal moveto { [p <degree>] [y <degree>] } [vp <speed>] [vy <speed>]**
     - 参数
         - *p* (int:[-25, 30]) ：pitch 轴角度(°)
         - *y* (int:[-250, 250]) ：yaw 轴角度(°)
-        - *vp* (int:[0, 540]) ：pitch 轴运动速速(°)
+        - *vp* (int:[0, 540]) ：pitch 轴运动速度(°)
         - *vy* (int:[0, 540]) ：yaw 轴运动速度(°)
     - 示例
         - *gimbal moveto p 10 y -20 vp 0.1* ：以机器人上电位置为坐标基准，控制云台运动到 pitch 轴角度为 10°，yaw 轴角度为 -20° 的状态，运动时指定 pitch 轴的运动速度为 0.1°/s
