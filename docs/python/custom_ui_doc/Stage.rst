@@ -4,7 +4,7 @@ Stage
 
 系统初始化时会自动创建一个 Stage 类的对象 stage ，直接使用即可，不需要用户自己创建。
 
-.. function:: object.add_widget(widget_obj)
+.. function:: stage.add_widget(widget_obj)
 
     :描述: 将参数中的控件添加到 UI 界面中
 
@@ -21,7 +21,7 @@ Stage
     my_button = Button()
     stage.add_widget(my_button)
 
-.. function:: stage_object.remove_widget(widget_obj)
+.. function:: stage.remove_widget(widget_obj)
 
     :描述: 从 UI 界面移除参数传入的控件 
 

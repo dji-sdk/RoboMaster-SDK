@@ -42,7 +42,7 @@ IN：**robot mode <mode>**
     - 参数
         - *mode* (:data:`mode_enum`): 机器人运动模式
     - 示例
-        - *robot mode chassis_lead* : 将机器人的运动模式设置为“云台跟随底盘模式”
+        - *robot mode chassis_lead;* : 将机器人的运动模式设置为“云台跟随底盘模式”
 
 .. note:: 机器人运动模式
 
@@ -65,8 +65,8 @@ IN: **robot mode ?**
     - 返回值
         - *mode* (:data:`mode_enum`): 机器人运动模式
     - 示例
-        - IN：*robot mode ?*: 查询当前的机器人运动模式
-        - OUT: *chassis_lead*: 机器人返回当前的运动模式为 *云台跟随底盘模式*
+        - IN：*robot mode ?;* : 查询当前的机器人运动模式
+        - OUT: *chassis_lead* : 机器人返回当前的运动模式为 *云台跟随底盘模式*
 
 .. warning:: 获取指令中的 *?*
 
@@ -89,7 +89,7 @@ IN: **chassis speed x <speed_x>  y <speed_y> z <speed_z>**
         - *speed_y* (float:[-3.5,3.5]): y 轴向运动速度，单位 m/s
         - *speed_z* (float:[-600,600]): z 轴向旋转速度，单位 °/s
     - 示例
-        - *chassis speed x 0.1 y 0.1 z 1* : 底盘 x 轴速度为 0.1 m/s，y 轴速度为 0.1 m/s，z 轴旋转速度为 1°/s 
+        - *chassis speed x 0.1 y 0.1 z 1;* : 底盘 x 轴速度为 0.1 m/s，y 轴速度为 0.1 m/s，z 轴旋转速度为 1°/s
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -106,7 +106,7 @@ IN: **chassis wheel w1 <speed_w1> w2 <speed_w2> w3 <speed_w3> w4 <speed_w4>**
         - *speed_w3* (int:[-1000, 1000]): 右后麦轮速度，单位 rpm
         - *speed_w4* (int:[-1000, 1000]): 左后麦轮速度，单位 rpm
     - 示例
-        - *chassis wheel w2 100 w1 12 w3 20 w4 11* : 底盘左前麦轮的速度为 100 rpm，右前麦轮速度为 12 rpm，右后麦轮速度为 20 rpm，左后麦轮速度为 11 rpm
+        - *chassis wheel w2 100 w1 12 w3 20 w4 11;* : 底盘左前麦轮的速度为 100 rpm，右前麦轮速度为 12 rpm，右后麦轮速度为 20 rpm，左后麦轮速度为 11 rpm
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 底盘相对位置控制
@@ -123,7 +123,7 @@ IN: **chassis move { [x <distance_x>] | [y <distance_y>] | [z <degree_z>] } [vxy
         - *speed_xy* (float:(0, 3.5]): xy 轴向运动速度，单位 m/s
         - *speed_z* (float:(0, 600]): z 轴向旋转速度， 单位 °/s
     - 示例
-        - *chassis move x 0.1 y 0.2* ：以当前位置为坐标原点，向 x 轴运动 0.1 m，向 y 轴运动 0.2 m
+        - *chassis move x 0.1 y 0.2;* ：以当前位置为坐标原点，向 x 轴运动 0.1 m，向 y 轴运动 0.2 m
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 底盘速度获取
@@ -136,8 +136,8 @@ IN: **chassis speed ?**
     - 返回值
         - *<x> <y> <z> <w1> <w2> <w3> <w4>* ：x 轴向运动速度(m/s)，y 轴向运动速度(m/s)，z 轴向旋转速度(°/s)，w1 右前麦轮速度(rpm)，w2 左前麦轮速速(rpm)，w3 右后麦轮速度(rpm)，w4 左后麦轮速度(rpm)
     - 示例
-        - IN: *chassis speed ?* : 获取底盘的运动速度信息
-        - OUT: *1 2 30 100 150 200 250* : 底盘当前的 x 轴向运动速度为 1 m/s，y 轴向运动速度 2 m/s，z 轴向旋转速度为 20°/s，1 号轮子转速为 100 rpm，2 号轮子转速为 100 rpm，3 号轮子转速为 100 rpm，4 号轮子转速为 100 rpm
+        - IN: *chassis speed ?;* : 获取底盘的运动速度信息
+        - OUT: *1 2 30 100 150 200 250;* : 底盘当前的 x 轴向运动速度为 1 m/s，y 轴向运动速度 2 m/s，z 轴向旋转速度为 20°/s，1 号轮子转速为 100 rpm，2 号轮子转速为 100 rpm，3 号轮子转速为 100 rpm，4 号轮子转速为 100 rpm
 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -151,7 +151,7 @@ IN: **chassis position ?**
     - 返回值
         - *<x> <y> <z>* ：x 轴位置(m)，y 轴位置(m)，偏航角度(°)
     - 示例
-        - IN: *chassis position ?* ：获取底盘的位置信息
+        - IN: *chassis position ?;* ：获取底盘的位置信息
         - OUT: *1 1.5 20* ：底盘当前的位置距离上电时刻位置，沿 x 轴运动了 1 m，沿 y 轴运动了 1.5 m，旋转了 20°
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -165,7 +165,7 @@ IN: **chassis attitude ?**
     - 返回值
         - *<pitch> <roll> <yaw>* ：pitch 轴角度(°)，roll 轴角度(°)，yaw 轴角度(°)
     - 示例
-        - *chassis attitude ?* ：查询底盘的姿态信息
+        - *chassis attitude ?;* ：查询底盘的姿态信息
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 底盘状态获取
@@ -189,7 +189,7 @@ IN: **chassis status ?**
             - *roll_over*：是否翻车
             - *hill_static*：是否在坡上静止
     - 示例
-        - IN: *chassis status ?* ：查询底盘的状态
+        - IN: *chassis status ?;* ：查询底盘的状态
         - OUT: *0 1 0 0 0 0 0 0 0 0 0* : 底盘当前处于上坡状态
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -213,10 +213,10 @@ IN：**chassis push {[position <switch> pfreq <freq>][attitude <switch> afreq <f
         - *freq* (int:(1,5,10,20,30,50)) ：对应的属性推送的推送频率
         - *freq_all* (int:(1,5,10,20,30,50)) : 整个底盘所有相关推送信息的推送频率
     - 示例
-        - *chassis push attitude on* : 打开底盘姿态信息推送
-        - *chassis push attitude on status on* ：打开底盘姿态、状态信息推送
-        - *chassis push attitude on afreq 1 status on sfreq 5* ：打开底盘的姿态信息推送，推送频率为每秒一次，同时打开底盘的状态信息推送，推送频率为每秒五次
-        - *chassis push freq 10* ：底盘所有信息推送的频率为每秒十次
+        - *chassis push attitude on;* : 打开底盘姿态信息推送
+        - *chassis push attitude on status on;* ：打开底盘姿态、状态信息推送
+        - *chassis push attitude on afreq 1 status on sfreq 5;* ：打开底盘的姿态信息推送，推送频率为每秒一次，同时打开底盘的状态信息推送，推送频率为每秒五次
+        - *chassis push freq 10;* ：底盘所有信息推送的频率为每秒十次
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 底盘推送信息数据
@@ -233,7 +233,7 @@ OUT: **chassis push <attr> <data>**
             - 当 *attr* 为 **attitude** 时，*data* 内容为 *<pitch> <roll> <yaw>*
             - 当 *attr* 为 **status** 时，*data* 内容为 *<static> <uphill> <downhill> <on_slope> <pick_up> <slip> <impact_x> <impact_y> <impact_z> <roll_over> <hill_static>*
     - 示例
-        - *chassis push attitude 0.1 1 3* ：当前底盘的 pitch、roll、yaw 姿态信息分别为 0.1、1、3
+        - *chassis push attitude 0.1 1 3;* ：当前底盘的 pitch、roll、yaw 姿态信息分别为 0.1、1、3
 
 *************************
 云台控制
@@ -251,7 +251,7 @@ IN: **gimbal speed p <speed> y <speed>**
         - *p* (float:[-450, 450]) ：pitch 轴速度，单位 °/s
         - *y* (float:[-450, 450]) ：yaw 轴速度，单位 °/s
     - 示例
-        - *gimbal speed p 1 y 1* ：云台的 pitch 轴速度为 1°/s，yaw 轴速度为 1°/s
+        - *gimbal speed p 1 y 1;* ：云台的 pitch 轴速度为 1°/s，yaw 轴速度为 1°/s
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 云台相对位置控制
@@ -267,7 +267,7 @@ IN: **gimbal move { [p <degree>] [y <degree>] } [vp <speed>] [vy <speed>]**
         - *vp* (float:[0, 540]) ：pitch 轴运动速速，单位 °/s
         - *vy* (float:[0, 540]) ：yaw 轴运动速度，单位 °/s
     - 示例
-        - *gimbal move p 10* ：以当前位置为坐标基准，控制云台运动到 pitch 轴角度为 10° 的状态
+        - *gimbal move p 10;* ：以当前位置为坐标基准，控制云台运动到 pitch 轴角度为 10° 的状态
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 云台绝对位置控制
@@ -283,7 +283,7 @@ IN: **gimbal moveto { [p <degree>] [y <degree>] } [vp <speed>] [vy <speed>]**
         - *vp* (int:[0, 540]) ：pitch 轴运动速度(°)
         - *vy* (int:[0, 540]) ：yaw 轴运动速度(°)
     - 示例
-        - *gimbal moveto p 10 y -20 vp 0.1* ：以机器人上电位置为坐标基准，控制云台运动到 pitch 轴角度为 10°，yaw 轴角度为 -20° 的状态，运动时指定 pitch 轴的运动速度为 0.1°/s
+        - *gimbal moveto p 10 y -20 vp 0.1;* ：以机器人上电位置为坐标基准，控制云台运动到 pitch 轴角度为 10°，yaw 轴角度为 -20° 的状态，运动时指定 pitch 轴的运动速度为 0.1°/s
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 云台休眠控制
@@ -294,7 +294,7 @@ IN: **gimbal suspend**
     - 描述
         - 控制云台进入休眠状态
     - 示例
-        - *gimbal suspend* ：使云台进入休眠状态
+        - *gimbal suspend;* ：使云台进入休眠状态
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 云台恢复控制
@@ -307,7 +307,7 @@ IN: **gimbal resume**
     - 参数
         - *None*
     - 示例
-        - *gimbal resume* ：使云台退出休眠状态
+        - *gimbal resume;* ：使云台退出休眠状态
 
 .. warning:: 休眠状态
     当云台进入休眠状态时，云台两轴电机将会释放控制力，云台整体不响应任何控制指令。
@@ -323,7 +323,7 @@ IN: **gimbal recenter**
     - 描述
         - 云台回中
     - 示例
-        - *gimbal recenter* ：控制云台回中
+        - *gimbal recenter;* ：控制云台回中
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 云台姿态获取
@@ -336,7 +336,7 @@ IN: **gimbal attitude ?**
     - 返回值
         - *<pitch> <yaw>* ：pitch 轴角度(°)，yaw 轴角度(°)
     - 示例
-        - IN：*gimbal attitude ?* ：查询云台的角度信息
+        - IN：*gimbal attitude ?;* ：查询云台的角度信息
         - OUT: *-10 20* ：云台当前 pitch 轴角度 -10°，yaw 轴角度 20°
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -353,7 +353,7 @@ IN: **gimbal push <attr> <switch> [afreq <freq_all>]**
         - *switch* (:data:`switch_enum`) ：当此处参数使用 *on* 时，表示打开对应属性的推送；当此处参数使用 *off* 时，表示关闭对应属性的推送
         - *freq_all* : 云台所有相关推送信息的推送频率
     - 示例
-        - *gimbal push attitude on* ：打开云台的信息推送
+        - *gimbal push attitude on;* ：打开云台的信息推送
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 云台推送信息数据
@@ -368,7 +368,7 @@ OUT: **gimabal push <attr> <data>**
         - *data*: 订阅的属性数据
             - 当 *attr* 为 **attitude** 时，*data* 内容为 *<pitch> <yaw>*
     - 示例
-        - *gimbal push attitude 20 10* ：当前云台的 pitch 角度为 20°，yaw 角度为 10°
+        - *gimbal push attitude 20 10;* ：当前云台的 pitch 角度为 20°，yaw 角度为 10°
 
 *************************
 发射器控制
@@ -385,7 +385,7 @@ IN：**blaster bead <num>**
     - 参数
         - *num* (int:[1,5]) ：发射量
     - 示例
-        - *blaster bead 2* ：控制发射器单次发射两发
+        - *blaster bead 2;* ：控制发射器单次发射两发
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 发射器发射控制
@@ -396,7 +396,7 @@ IN: **blaster fire**
     - 描述
         - 控制水弹枪发射一次
     - 示例
-        - *blaster fire* ：控制水弹枪发射一次
+        - *blaster fire;* ：控制水弹枪发射一次
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 发射器单次发射量获取
@@ -409,7 +409,7 @@ IN: **blaster bead ?**
     - 返回值
         - *<num>* ：水弹枪单次发射的水弹数
     - 示例
-        - IN: *blaster bead ?* ：查询水弹枪单次发射的水弹数
+        - IN: *blaster bead ?;* ：查询水弹枪单次发射的水弹数
         - OUT: *3* ：当前水弹枪单次发射水弹数量为 3
 
 *************************
@@ -427,7 +427,7 @@ IN: **armor sensitivity <value>**
     - 参数
         - *value* (int:[1,10]) ：装甲板灵敏度，数值越大，越容易检测到打击。默认灵敏度值为 5
     - 示例
-        - *armor sensitivity 1* ：设置装甲板打击检测灵敏度为 1
+        - *armor sensitivity 1;* ：设置装甲板打击检测灵敏度为 1
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 装甲板灵敏度获取
@@ -440,7 +440,7 @@ IN: **armor sensitivity ?**
     - 参数
         - *<value>* ：装甲板灵敏度
     - 示例
-        - IN: *armor sensitivity ?* ：查询装甲板打击检测灵敏度
+        - IN: *armor sensitivity ?;* ：查询装甲板打击检测灵敏度
         - OUT: *5* ：查询装甲板打击检测灵敏度
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -456,7 +456,7 @@ IN: **armor event <attr> <switch>**
         - *attr* (:data:`armor_event_attr_enum`) : 事件属性名称
         - *switch* (:data:`switch_enum`) : 事件属性控制开关
     - 示例
-        - *armor event hit on* ：打开装甲板检测事件推送
+        - *armor event hit on;* ：打开装甲板检测事件推送
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 装甲板事件上报数据
@@ -479,7 +479,7 @@ OUT: **armor event hit <index> <type>**
             - ``1`` 撞击
             - ``2`` 手敲击
     - 示例
-        - *armor event hit 1 0* ：1 号装甲板检测到水弹枪攻击
+        - *armor event hit 1 0;* ：1 号装甲板检测到水弹枪攻击
 
 *************************
 声音识别控制
@@ -498,7 +498,7 @@ IN: **sound event <attr> <switch>**
         - *attr* (:data:`sound_event_attr_enum`) : 事件属性名称
         - *switch* (:data:`switch_enum`) : 事件属性控制开关
     - 示例
-        - *sound event applause on* ：打开声音（掌声）识别
+        - *sound event applause on;* ：打开声音（掌声）识别
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 声音识别事件上报数据
@@ -514,7 +514,7 @@ OUT: **sound event <attr> <data>**
         - *data* ：事件属性数据
             - 当 *attr* 为 ``applause`` 时， *data* 为 *<count>*，表示短时间内击掌的次数
     - 示例
-        - *sound event applause 2* ：识别到短时间内有 2 次拍掌
+        - *sound event applause 2;* ：识别到短时间内有 2 次拍掌
 
 *************************
 PWM 控制
@@ -532,7 +532,7 @@ IN: **pwm value <port_mask> <value>**
         - *port_mask* (hex:0-0xffff) ：PWM 拓展口掩码组合, 编号为 X 的输出口对应掩码为 **1 << (X-1)**
         - *value* (float:0-100) ：PWM 输出占空比，默认输出为 12.5
     - 示例
-        - *pwm value 1 50* : 控制 1 号 PWM 口的占空比为 50%
+        - *pwm value 1 50;* : 控制 1 号 PWM 口的占空比为 50%
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 PWM 输出频率控制
@@ -546,7 +546,7 @@ IN: **pwm freq <port_mask> <value>**
         - *port_mask* (hex:0-0xffff) ：PWM 拓展口掩码组合, 编号为 X 的输出口对应掩码为 **1 << (X-1)**
         - *value* (int:XXX) ：PWM 输出频率值
     - 示例
-        - *pwm freq 1 1000* : 控制 1 号 PWM 口的频率为 1000 Hz
+        - *pwm freq 1 1000;* : 控制 1 号 PWM 口的频率为 1000 Hz
 
 *************************
 LED 控制
@@ -569,7 +569,7 @@ IN：**led control comp <comp_str> r <r_value> g <g_value> b <value> effect <eff
         - *effect_str* (:data:`led_effect_enum`) ：LED 灯效类型
 
     - 示例
-        - led control comp all r 255 g 0 b 0 solid : 机器人所有 LED 常亮为红色
+        - *led control comp all r 255 g 0 b 0 effect solid;* : 机器人所有 LED 常亮为红色
 
 *************************
 传感器转接板控制
@@ -589,7 +589,7 @@ IN: **sensor_adapter adc id <adapter_id> port <port_num> ?**
     - 返回值
         - *adc_value* ：测量得到相应转接板上指定端口的电压值，电压取值范围[0V, 3,3V] 
     - 示例
-        - IN: *sensor_adapter adc id 1 port 1 ?* : 查询 1 号转接板上 1 号端口的 ADC 数值
+        - IN: *sensor_adapter adc id 1 port 1 ?;* : 查询 1 号转接板上 1 号端口的 ADC 数值
         - OUT: *1.1* ：当前查询端口 ADC 值为 1.1
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -606,7 +606,7 @@ IN: **sensor_adapter io_level id <adapter_id> port <port_num> ?**
     - 返回值
         - *io_level_value* ：测量得到相应转接板上指定端口的逻辑电平值，0 或 1
     - 示例
-        - IN: *sensor_adapter io_level id 1 port 1 ?* ：查询 1 号转接板上 1 号端口的 IO 逻辑电平
+        - IN: *sensor_adapter io_level id 1 port 1 ?;* ：查询 1 号转接板上 1 号端口的 IO 逻辑电平
         - OUT: *1* ：当前查询端口的 IO 值为 1 
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -623,7 +623,7 @@ IN: **sensor_adapter pulse_period id <adapter_id> port <port_num>**
     - 返回值
         - *pulse_period_value*: 测量得到相应转接板上指定端口的电平跳变持续时间值，单位 ms
     - 示例
-        - *sensor_adapter pulse_period id 1 port 1* ：查询 1 号转接板上 1 号端口的电平跳变持续时间
+        - *sensor_adapter pulse_period id 1 port 1;* ：查询 1 号转接板上 1 号端口的电平跳变持续时间
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 传感器转接板事件上报控制
@@ -636,7 +636,7 @@ IN: **sensor_adapter event io_level <switch>**
     - 参数
         - *switch* (:data:`switch_enum`)：电平跳变事件上报的控制开关
     - 示例
-        - *sensor_adapter event io_level on* ：打开传感器转接板的电平跳变事件推送、
+        - *sensor_adapter event io_level on;* ：打开传感器转接板的电平跳变事件推送、
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 传感器转接板事件上报数据
@@ -652,7 +652,7 @@ OUT: *sensor_adapter event io_level (<id>, <port_num>, <io_level>)*
         - *port_num*：IO 的 ID
         - *io_level*：当前的逻辑电平值
     - 示例
-        - *sensor_adapter event io_level (1, 1, 0)* ：当前 1 号转接板的 1 号 IO 的逻辑电平跳变为 0
+        - *sensor_adapter event io_level (1, 1, 0);* ：当前 1 号转接板的 1 号 IO 的逻辑电平跳变为 0
 
 *************************
 红外深度传感器控制
@@ -669,7 +669,7 @@ IN: **ir_distance_sensor measure <switch>**
     - 参数
         - *switch* (:data:`switch_enum`)：红外传感器的开关
     - 示例
-        - *ir_distance_sensor measure on* ：打开所有红外深度传感器
+        - *ir_distance_sensor measure on;* ：打开所有红外深度传感器
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 红外深度传感器距离获取
@@ -684,7 +684,7 @@ IN: **ir_distance_sensor distance <id> ?**
     - 返回值
         - *distance_value*：指定 ID 的红外传感器测得的距离值，单位 mm
     - 示例
-        - IN: *ir_distance_sensor distance 1* ：查询 1 号红外深度传感器测得的距离值
+        - IN: *ir_distance_sensor distance 1;* ：查询 1 号红外深度传感器测得的距离值
         - OUT: *1000* ：当前查询红外深度传感器距离值为 1000 mm
 
 *************************
@@ -703,7 +703,7 @@ IN: **servo angle id <servo_id> angle <angle_value>**
         - *servo_id* (int:[1, 3])：舵机的 ID
         - *angle_value* (float:[-180, 180])：指定的角度，单位 °
     - 示例
-        - *servo angle id 1 angle 20* ：控制 1 号舵机的角度为 20°
+        - *servo angle id 1 angle 20;* ：控制 1 号舵机的角度为 20°
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 舵机速度控制
@@ -717,7 +717,7 @@ IN: **servo speed id <servo_id> speed <speed_value>**
         - *servo_id* (int:[1, 3])：舵机的 ID
         - *speed_value* (float:[-1800, 1800])：设置的速度值，单位 °/s 
     - 示例
-        - *servo speed id 1 speed 20* ：设置 1 号舵机的速度为 10°/s
+        - *servo speed id 1 speed 20;* ：设置 1 号舵机的速度为 10°/s
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 舵机停止控制
@@ -728,7 +728,7 @@ IN: **servo stop**
     - 描述
         - 停止舵机运动
     - 示例
-        - *servo stop* ：控制舵机停止运动
+        - *servo stop;* ：控制舵机停止运动
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 舵机角度查询
@@ -743,7 +743,7 @@ IN: **servo angle id <servo_id> ?**
     - 返回值
         - *angle_value*  : 指定舵机的角度值
     - 示例
-        - IN: *servo angle id 1 ?* ：获取 1 号舵机的角度值
+        - IN: *servo angle id 1 ?;* ：获取 1 号舵机的角度值
         - OUT: *30* ：当前查询舵机角度值为 30°
 
 *************************
@@ -759,10 +759,10 @@ IN: **robotic_arm move x <x_dist> y <y_dist>**
     - 描述
         - 控制机械臂运动一段距离，当前位置为坐标原点
     - 参数
-        - *x_dist* (float:[])：x 轴运动距离，单位 cm
+        - *x_dist* (float:[]) ：x 轴运动距离，单位 cm
         - *y_dist* (float:[]) ：y 轴运动距离，单位 cm
     - 示例
-        - *robotic_arm move x 5 y 5* ：控制机械臂在 x 轴运动 5 cm，在 y 轴运动 5 cm
+        - *robotic_arm move x 5 y 5;* ：控制机械臂在 x 轴运动 5 cm，在 y 轴运动 5 cm
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 机械臂绝对位置运动控制
@@ -776,7 +776,7 @@ IN: **robotic_arm moveto x <x_pos> y <y_pos>**
         - *x_pos* (float:[])：x 轴运动到的坐标，单位 cm
         - *y_pos* (float:[])：y 轴运动到的坐标，单位 cm
     - 示例
-        - *robotic_arm moveto x 5 y 5* ：控制机械臂 x 轴运动到 5 cm 的坐标位置，y 轴运动到 5 cm 的坐标位置
+        - *robotic_arm moveto x 5 y 5;* ：控制机械臂 x 轴运动到 5 cm 的坐标位置，y 轴运动到 5 cm 的坐标位置
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 机械臂回中控制
@@ -789,7 +789,7 @@ IN: **robotic_arm recenter**
     - 参数
         - *None*
     - 示例
-        - *robotic_arm recenter* ：控制机械臂回中
+        - *robotic_arm recenter;* ：控制机械臂回中
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 机械臂停止运动控制
@@ -802,7 +802,7 @@ IN: **robotic_arm stop**
     - 参数
         - *None*
     - 示例
-        - *robotic_arm stop* ：停止机械臂运动
+        - *robotic_arm stop;* ：停止机械臂运动
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 机械臂绝对位置查询
@@ -819,7 +819,7 @@ IN: **robotic_arm position ?**
             - *x_pos*：x 轴的坐标，单位 cm
             - *y_pos*：y 轴的坐标，单位 cm
     - 示例
-        - IN: *robotic_arm position ?* ：查询机械臂的位置
+        - IN: *robotic_arm position ?;* ：查询机械臂的位置
         - OUT：*50 60* ：当前查询机械臂的位置距离标定点 x 轴距离为 50 cm, y 轴距离为 60 cm
 
 *************************
@@ -837,7 +837,7 @@ IN: **robotic_gripper open [leve <level_num>]**
     - 参数
         - *level_num* (int:[1,4])：机械爪张开的力度等级，取值范围[1,4]
     - 示例
-        - *robotic_gripper open 1* ：控制机械臂以力度 1 打开
+        - *robotic_gripper open 1;* ：控制机械臂以力度 1 打开
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 机械爪关闭运动控制
@@ -850,7 +850,7 @@ IN: **robotic_gripper close [leve <level_num>]**
     - 参数
         - *level_num* (int:[1,4])：机械爪闭合的力度等级，取值范围[1,4]
     - 示例
-        - *robotic_gripper close 1* ：控制机械臂以力度 1 关闭
+        - *robotic_gripper close 1;* ：控制机械臂以力度 1 关闭
 
 .. note:: 机械爪控制力度
 
@@ -874,7 +874,7 @@ IN: **robotic_gripper status ?**
             - ``1`` 机械爪既没有完全闭合，也没有完全张开
             - ``2`` 机械爪完全张开
     - 示例
-        - IN: *robotic_gripper status ?* ：获取机械爪的开合状态
+        - IN: *robotic_gripper status ?;* ：获取机械爪的开合状态
         - OUT: *2* ：当前查询的机械爪状态为张开
 
 *************************
@@ -891,7 +891,7 @@ IN: **stream on**
         - 打开视频流
         - 打开后，可从视频流端口接收到 H.264 编码的码流数据
     - 示例
-        - *stream on* ：打开视频流
+        - *stream on;* ：打开视频流
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 视频流关闭控制
@@ -903,7 +903,7 @@ IN: **stream off**
         - 关闭视频流
         - 关闭视频流后，H.264 编码的码流数据将会停止输出
     - 示例
-        - *stream off* ：关闭视频流
+        - *stream off;* ：关闭视频流
 
 *************************
 音频流控制
@@ -919,7 +919,7 @@ IN: **audio on**
         - 打开音频流
         - 关闭音频流后，可以从音频流端口接收到 Opus 编码的音频流数据
     - 示例
-        - *audio on* ：打开音频流
+        - *audio on;* ：打开音频流
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 音频流关闭控制
@@ -931,7 +931,7 @@ IN: **audio off**
         - 关闭音频流
         - 关闭音频流后，Opus 编码的音频流数据将会停止输出
     - 示例
-        - *audio off* ：关闭音频流
+        - *audio off;* ：关闭音频流
 
 *************************
 IP 广播

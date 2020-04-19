@@ -54,3 +54,5 @@
     :示例: ``servo_ctrl.set_speed(1, 5)``
 
     :示例说明: 设置编号为 1 的舵机顺时针旋转，旋转速度为 5 度/秒
+
+.. hint:: 模块说明请参考 :doc:`舵机 <../extension_module/servo>`

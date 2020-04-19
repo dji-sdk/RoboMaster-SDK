@@ -54,3 +54,5 @@
     :示例: ``robotic_arm_ctrl.recenter()``
 
     :示例说明: 设置机械臂回中
+
+.. hint:: 模块说明请参考 :doc:`机械臂与机械爪 <../extension_module/robotic_arm_and_gripper>`

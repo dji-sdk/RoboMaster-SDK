@@ -1,5 +1,5 @@
 ﻿========
-连接
+接入方式
 ========
 
 *********
@@ -15,6 +15,7 @@
     2. *USB 连接* ：通过机器人的智能中控上的 USB 端口接入（需支持 RNDIS 功能）
 
     3. *UART 连接* ：通过机器人的运动控制器上的 UART 接口接入
+	
 
 - **组网连接** ：
 
@@ -65,7 +66,9 @@ IP 广播    40926     UDP       当机器人未与任何设备建立连接时�
 
 下面我们将以 Python 编程语言为基础，介绍多种连接方式的使用范例。以下所有示例中，默认 PC 上需要集成 Python 3.x 环境（安装方式请参考 `Python Getting Started <https://www.python.org/about/gettingstarted/>`_），后面不再赘述。
 
-Wi-Fi 直连
+.. _wifi_direct:
+
+WIFI 直连模式
 -------------
 
 - **环境准备**
@@ -95,6 +98,7 @@ Wi-Fi 直连
 	.. code-block:: python 
 		:linenos:
 
+		# -*- encoding: utf-8 -*-
 		# 测试环境: Python 3.6 版本
 
 		import socket
@@ -163,7 +167,13 @@ Wi-Fi 直连
 
 在成功建立控制连接后，在命令行里输入 ``command``, 机器人返回 ``ok``，则表示已经完成连接，并且机器人进入 SDK 模式成功，之后你就可以输入任意控制指令进行机器人控制了。
 
-Wi-Fi/有线网络组网连接
+- **其他**
+
+UART物理链路连接示例请参考：:doc:`UART <../extension_module/uart>`
+
+.. _wifi_sta:
+
+WIFI 路由器模式
 -------------------------
 
 - **环境准备**
@@ -209,6 +219,7 @@ Wi-Fi/有线网络组网连接
 		.. code-block:: python 
 			:linenos:
 
+			# -*- encoding: utf-8 -*-
 			import socket
 
 			ip_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -237,6 +248,7 @@ Wi-Fi/有线网络组网连接
 	.. code-block:: python 
 		:linenos:
 
+		# -*- encoding: utf-8 -*-
 		# 测试环境：Python 3.6 版本
 
 		import socket
@@ -306,6 +318,8 @@ Wi-Fi/有线网络组网连接
 
 在成功建立控制连接后，在命令行里输入 ``command``, 机器人返回 ``ok``，则表示已经完成连接，并且机器人进入 SDK 模式成功，之后你就可以输入任意控制指令进行机器人控制了。
 
+.. _usb_conn:
+
 USB 连接
 -----------
 
@@ -356,13 +370,14 @@ USB 连接模式，实质上是使用 RNDIS 协议，将机器人上的 USB 设�
 
 4. 准备连接
 
-	连接过程与 `Wi-Fi 直连`_-> **准备连接脚本** 类似，需要将机器人 IP 地址替换为 USB 模式下的 IP 地址，其余代码与步骤保持不变即可，这里不再赘述
+	连接过程与 :ref:`wifi_direct` -> **准备连接脚本** 类似，需要将机器人 IP 地址替换为 USB 模式下的 IP 地址，其余代码与步骤保持不变即可，这里不再赘述
 
 	参考代码变更如下
 
 	.. code-block:: python 
 		:linenos:
 
+		# -*- encoding: utf-8 -*-
 		# 测试环境: Python 3.6 版本
 
 		import socket
@@ -378,6 +393,7 @@ USB 连接模式，实质上是使用 RNDIS 协议，将机器人上的 USB 设�
 
 在成功建立控制连接后，在命令行里输入 ``command``, 机器人返回 ``ok``，则表示已经完成连接，并且机器人进入 SDK 模式成功，之后你就可以输入任意控制指令进行机器人控制了。
 
+.. _uart_conn:
 
 UART 连接
 -----------
@@ -413,6 +429,7 @@ UART 连接
 	.. code-block:: python
 		:linenos:
 
+		# -*- encoding: utf-8 -*-
 		# 测试环境：Python 3.6 版本
 		import serial
 
@@ -451,7 +468,7 @@ UART 连接
 
 - **验证**
 
-在成功建立控制连接后，在命令行里输入 ``command``, 机器人返回 ``ok``，则表示已经完成连接，并且机器人进入 SDK 模式成功，之后你就可以输入任意控制指令进行机器人控制了。
+在成功建立控制连接后，在命令行里输入 ``command;``, 机器人返回 ``ok``，则表示已经完成连接，并且机器人进入 SDK 模式成功，之后你就可以输入任意控制指令进行机器人控制了。
 
 
 .. tip:: 示例代码

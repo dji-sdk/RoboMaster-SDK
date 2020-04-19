@@ -15,7 +15,7 @@ InputField 控件用于接收用户输入的文本信息
 
     :return: 无
 
-    :示例: ``my_InputField.set_text(120, 120, 120, 200, text_anchor.upper_left, 12)``
+    :示例: ``my_InputField.set_text('Hello RoboMaster',120, 120, 120, 200, text_anchor.upper_left, 12)``
 
     :示例说明: 设置字体的 rgb 值为（120, 120, 120），透明度为 200 ，字体对齐方式为顶端左对齐，字号大小为 12 号
 

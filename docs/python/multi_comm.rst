@@ -24,7 +24,7 @@
 
     :return: 无
 
-    :示例: ``multi_comm_ctrl.send('RoboMaster EP', 3)``
+    :示例: ``multi_comm_ctrl.send_msg('RoboMaster EP', 3)``
 
     :示例说明: 向组号 3 发送消息 ``'RoboMaster EP'``
 
@@ -58,3 +58,5 @@
         pass
 
     multi_comm_ctrl.register_recv_callback(recv_callback)
+
+.. hint:: 模块说明请参考 :doc:`多机通信 <./multi_comm_info>`

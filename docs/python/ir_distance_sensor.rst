@@ -1,5 +1,5 @@
 ===================
-传感器
+红外深度传感器
 ===================
 
 .. function:: ir_distance_sensor_ctrl.enable_measure(port_id)
@@ -93,3 +93,5 @@
 
     if ir_distance_sensor_ctrl.check_condition('ir_distance_1_gt_50'):
         pass
+
+.. hint:: 模块说明请参考 :doc:`红外深度传感器 <../extension_module/ir_distance_sensor>`

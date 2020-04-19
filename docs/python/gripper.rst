@@ -75,3 +75,5 @@
     :示例: ``ret = gripper_ctrl.is_open()``
 
     :示例说明: 获取机械爪张开状态
+
+.. hint:: 模块说明请参考 :doc:`机械臂与机械爪 <../extension_module/robotic_arm_and_gripper>`

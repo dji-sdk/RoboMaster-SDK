@@ -1,5 +1,5 @@
 ===================
-转接模块
+传感器转接模块
 ===================
 
 .. function:: sensor_adapter_ctrl.get_sensor_adapter_adc(board_id, port_num)
@@ -83,3 +83,5 @@
 
     if sensor_adapter_ctrl.check_condition(rm_define.cond_sensor_adapter1_port2_trigger_event):
         pass
+
+.. hint:: 模块说明请参考 :doc:`传感器转接模块 <../extension_module/sensor_adapter>`
