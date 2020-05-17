@@ -20,7 +20,7 @@ recv = robot.recv_ctrl_data(5)
 print('recv data from robot : %s'%recv)
 
 
-robot.send_data('version')
+robot.send_data('version ?')
 print('send data to robot   : version ?')
 recv = robot.recv_ctrl_data(5)
 print('recv data from robot : %s'%recv)
