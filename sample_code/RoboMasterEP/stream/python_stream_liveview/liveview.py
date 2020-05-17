@@ -1,7 +1,7 @@
 #!python3
 
 import sys
-sys.path.append('../decoder/output/')
+sys.path.append('../decoder/ubuntu/output/')
 sys.path.append('../../connection/network/')
 
 import threading

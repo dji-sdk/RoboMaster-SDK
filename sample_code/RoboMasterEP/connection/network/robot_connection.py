@@ -136,6 +136,7 @@ class RobotConnection(object):
         """
         Send data to control port
         """
+        msg += ';'
         self.__send_data(self.ctrl_socket, msg)
 
     def recv_video_data(self, timeout=None, latest_data=False):
@@ -259,7 +260,7 @@ def test():
     recv = robot.recv_ctrl_data(5)
     print('recv data from robot : %s'%recv)
 
-    robot.send_data('version')
+    robot.send_data('version ?')
     print('send data to robot   : version ?')
     recv = robot.recv_ctrl_data(5)
     print('recv data from robot : %s'%recv)
