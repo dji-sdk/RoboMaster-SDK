@@ -684,7 +684,7 @@ IN: **ir_distance_sensor distance <id> ?**
     - 返回值
         - *distance_value*：指定 ID 的红外传感器测得的距离值，单位 mm
     - 示例
-        - IN: *ir_distance_sensor distance 1;* ：查询 1 号红外深度传感器测得的距离值
+        - IN: *ir_distance_sensor distance 1 ?;* ：查询 1 号红外深度传感器测得的距离值
         - OUT: *1000* ：当前查询红外深度传感器距离值为 1000 mm
 
 *************************
