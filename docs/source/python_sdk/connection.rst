@@ -5,6 +5,8 @@
 RoboMaster SDK 和机器人建立连接
 ###############################
 
+.. _EpConn:
+
 EP连接方式
 ************
 
@@ -110,12 +112,14 @@ USB 连接模式，实质上是使用 RNDIS 协议，将机器人上的 USB 设�
        :linenos:
        :lines: 17-
 
+.. _TelloConn:
+
 教育无人机系列连接方式
 **********************
 
 教育无人机目前主要包括 Tello EDU 以及 Tello Talent，Robomaster SDK支持通过WIFI直连模式与这两款产品建立连接。
 
-1. **WIFI 直连模式** ：
+1. **WIFI直连** ：
 
 *Wi-Fi 直连* ：通过将机器人设置为直连模式，并连接机器人的 WIFI 热点进行接入，WIFI 直连模式下，机器人默认 IP 为 192.168.10.1
 
@@ -147,6 +151,26 @@ USB 连接模式，实质上是使用 RNDIS 协议，将机器人上的 USB 设�
 - 运行结果::
 
     Drone SDK Version: xx.xx.xx.xx
+
+
+2. **组网模式** ：
+
+*组网模式* ：将机器人设置为组网模式，并连接SDK运行设备所在的局域网进行接入，
+
+- 首先将飞机设置为 *直连模式*，并且与运行SDK的设备连接，具体操作参考上一小节
+
+- 运行提供的示例程序 :file:`/examples/12_drone/24_set_sta.py`，
+  将程序中的 `ssis` 与 `password` 参数改为当前使用的路由器的账号与密码
+
+.. literalinclude:: ./../../..//examples/12_drone/24_set_sta.py
+   :language: python
+   :linenos:
+   :lines: 17-
+
+- 接下来等待几秒，TelloEUD机器本身自动重启，TelloTalent的扩展模块会自动重启，
+  之后机器会自动连接到指定的路由器所在的局域网内
+
+- 将运行SDK的设备也连接至该局域网内，此时SDK与机器即在同一网络内
 
 通讯方式
 **********
@@ -207,8 +231,8 @@ Robomaster SDK 与EP的3种连接方式在通讯协议上支持 TCP 和 UDP 通�
 
     Robot Version: xx.xx.xx.xx
 
-Tello 通讯方式
-_____________
+教育无人机 通讯方式
+___________________________
 
 目前 Tello EDU 与 Tello Talent 只支持UDP通信方式，因此不需要额外的配置
 

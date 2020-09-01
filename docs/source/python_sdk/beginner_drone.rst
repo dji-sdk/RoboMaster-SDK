@@ -1,4 +1,4 @@
-.. _beginnger:
+.. _beginngerDrone:
 
 ###########################################
 RoboMaster SDK 新手入门 - 教育系列无人机篇
@@ -139,10 +139,10 @@ _______________________
 
 - 利用 `释放机器人资源`_ 章节的介绍释放相关资源
 
-示例程序中提供了一个完整的设置装甲灯的例程 :file:`/examples/12_robot/20_led.py`，
+示例程序中提供了一个完整的设置装甲灯的例程 :file:`/examples/12_drone/20_led.py`，
 例程中利用了for循环，实现了led灯的8次颜色变换，每次维持0.5秒钟
 
-.. literalinclude:: ./../../../examples/12_robot/20_led.py
+.. literalinclude:: ./../../../examples/12_drone/20_led.py
    :language: python
    :linenos:
    :lines: 17-
@@ -168,9 +168,11 @@ SDK 将对应的任务发送给机器人，机器人收到任务后会选择执�
   用户可以通过 `timeout` 参数指定动作的超时时长。当调用 `wait_for_completed(timeout)`方法时，
   程序会阻塞在该语句，直至动作执行完毕或执行超时
 
+
 - 同一模块同一时间只能执行一个动作， 因此同一模块的任务之间互斥；不同模块之间的相互独立，动作可以同时执行。
   比如在使用任务动作控制接口后不立即调用 `wait_for_completed()` 方法时，用户在控制云台移动到指定角度的同时可以控制底盘移动到指定位置，
   但是不支持在上次控制云台的任务动作还未完成时再次发送其他的控制云台的任务动作
+
 
 .. tip:: 如果在使用任务动作控制接口时不马上调用 `wait_for_completed()` 方法，切记程序中要控制好逻辑，
   避免在该任务执行完毕前发送与其互斥的其他任务动作命令！
@@ -199,6 +201,7 @@ SDK 将对应的任务发送给机器人，机器人收到任务后会选择执�
 - 接下来会控制飞机向前飞行50cm，本示例为了说明任务类动作的特点，在控制飞机飞行后会设置扩展led灯效。
   使用 `flight` 对象中的 `forward()` 方法控制底盘向前飞行，该方法都只有一个参数 `distance` ， 用来指定飞行距离。
   设置扩展led模块可以参考 `示例一：设置机器人扩展led模块`_ 。接下来本文档会使用三种方法使用任务动作接口
+
 
   - 方法一：执行任务动作后，立即调用 `wait_for_completed()`方法::
 
@@ -235,7 +238,7 @@ SDK 将对应的任务发送给机器人，机器人收到任务后会选择执�
 
 示例程序中提供了一个完整的控制底盘前后各飞行50cm的例程 :file:`examples/12_drone/07_forward_backward.py`，
 
-.. literalinclude:: ./../../../12_drone/07_forward_backward.py
+.. literalinclude:: ./../../../examples/12_drone/07_forward_backward.py
    :language: python
    :linenos:
    :lines: 17-
@@ -278,7 +281,7 @@ SDK 将对应的任务发送给机器人，机器人收到任务后会选择执�
 
 示例程序中提供了一个完整的通过遥控器杆量控制飞机飞行的例程 :file:`examples/12_drone/13_rc.py`，
 
-.. literalinclude:: ./../../../12_drone/13_rc.py
+.. literalinclude:: ./../../../examples/12_drone/13_rc.py
    :language: python
    :linenos:
    :lines: 17-

@@ -24,10 +24,11 @@
     python_sdk/beginner.rst
     python_sdk/beginner_ep.rst
     python_sdk/beginner_drone.rst
+    python_sdk/beginner_multi_robot.rst
     python_sdk/log.rst
     python_sdk/apis.rst
-    python_sdk/multi_ctrl.rst
     python_sdk/modules.rst
+    python_sdk/multi_robot_apis.rst
 
 .. toctree::
     :maxdepth: 0

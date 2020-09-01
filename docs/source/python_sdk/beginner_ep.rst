@@ -1,4 +1,4 @@
-.. _beginnger:
+.. _beginngerEp:
 
 ####################################
 RoboMaster SDK 新手入门 - EP 篇
