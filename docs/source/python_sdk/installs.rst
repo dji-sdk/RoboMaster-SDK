@@ -10,7 +10,13 @@ RoboMaster SDK 安装
 安装 SDK 到 Windows平台
 -------------------------
 
-安装指导。
+开发环境准备
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. tip:: 在使用python sdk前，需要确保编程平台端安装对应的python环境，如果没有，请参考以下链接进行安装： :doc:`python编程环境安装 <./../code_env_setup>`
+
+安装robomaster python sdk
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 安装RoboMaster SDK，可输入以下指令::

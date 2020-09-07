@@ -29,7 +29,7 @@ Robomaster SDK 支持3种与EP的连接方式：WiFi 直连模式，WiFi 组网�
 
     .. centered:: DJI 妙算、Jetson Nano 或 PC 通过 WIFI 直连 到 EP
 
-- 参考sdk代码 :file:`/examples/01_robot/04_ap_conn.py` 目录下的例程
+- 参考sdk代码 :file:`/examples/01_robot/04_ap_conn.py` 目录下的例程（`GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_）
 
 .. literalinclude:: ./../../../examples/01_robot/04_ap_conn.py
    :language: python
@@ -55,7 +55,7 @@ USB 连接模式，实质上是使用 RNDIS 协议，将机器人上的 USB 设�
 
 	.. centered:: 树莓派连接示意图
 
-- 参考sdk代码 :file:`/examples/01_robot/06_rndis_conn.py` 目录下的例程
+- 参考sdk代码 :file:`/examples/01_robot/06_rndis_conn.py` 目录下的例程（`GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_）
 
 .. literalinclude:: ./../../../examples/01_robot/06_rndis_conn.py
    :language: python
@@ -84,7 +84,7 @@ USB 连接模式，实质上是使用 RNDIS 协议，将机器人上的 USB 设�
 
 	.. centered:: DJI 妙算、Jetson Nano 或 PC 路由连接至 EP
 
-- 参考sdk代码 :file:`/examples/01_robot/05_sta_conn_helper.py` 目录下的例程
+- 参考sdk代码 :file:`/examples/01_robot/05_sta_conn_helper.py` 目录下的例程（`GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_）
 
 .. literalinclude:: ./../../../examples/01_robot/05_sta_conn_helper.py
    :language: python
@@ -105,7 +105,7 @@ USB 连接模式，实质上是使用 RNDIS 协议，将机器人上的 USB 设�
 同时机器人的灯效变为白色呼吸变为青绿色常亮。
 
 .. tip:: 支持在组网模式下通过SN连接指定的机器人，用户通过在初始化时给 `sn` 参数赋值完成对机器人 sn 的输入，
-  参考例程 :file:`/examples/01_robot/05_sta_conn_sn.py`。在不指定 sn 时，SDK默认与搜索到的第一台机器人建立连接。
+  参考例程 :file:`/examples/01_robot/05_sta_conn_sn.py` （`GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_）。在不指定 sn 时，SDK默认与搜索到的第一台机器人建立连接。
 
     .. literalinclude:: ./../../../examples/01_robot/05_sta_conn_sn.py
        :language: python
@@ -141,7 +141,7 @@ USB 连接模式，实质上是使用 RNDIS 协议，将机器人上的 USB 设�
 
 - 准备具有WIFI连接功能的设备连接教育无人机的 WIFI，例如：DJI 妙算、Jetson Nano 或 PC：
 
-- 参考sdk代码 :file:`/examples/12_drone/01_ap_conn.py` 目录下的例程
+- 参考sdk代码 :file:`/examples/12_drone/01_ap_conn.py` 目录下的例程（`GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_）
 
 .. literalinclude:: ./../../../examples/12_drone/01_ap_conn.py
    :language: python
@@ -197,7 +197,7 @@ Robomaster SDK 与EP的3种连接方式在通讯协议上支持 TCP 和 UDP 通�
 
 1. TCP通讯
 
-- 参考sdk代码 :file:`/examples/01_robot/07_tcp_protocol.py` 目录下的例程
+- 参考sdk代码 :file:`/examples/01_robot/07_tcp_protocol.py` 目录下的例程（`GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_）
 
 .. literalinclude:: ./../../../examples/01_robot/07_tcp_protocol.py
    :language: python
@@ -214,7 +214,7 @@ Robomaster SDK 与EP的3种连接方式在通讯协议上支持 TCP 和 UDP 通�
 
 2. UDP 通讯
 
-- 参考sdk代码 :file:`/examples/01_robot/08_udp_protocol.py` 目录下的例程
+- 参考sdk代码 :file:`/examples/01_robot/08_udp_protocol.py` 目录下的例程（`GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_）
 
 .. literalinclude:: ./../../../examples/01_robot/08_udp_protocol.py
    :language: python

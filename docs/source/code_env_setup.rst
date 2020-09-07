@@ -14,26 +14,35 @@
 
 **环境：** Windows 10 64 位
 
-1. 从 `python 官网上 <https://www.python.org/downloads/>`_ 找到可以下载的安装包，以Python3.7.8 为例，选择安装文件进行下载。
+1. 从 `python 官网上 <https://www.python.org/downloads/windows/>`_ 找到可以下载的安装包，以Python3.7.8 为例，选择安装文件进行下载。
+
+.. warning:: 请确保下载的 `python.exe` 是64位的，否则会影响python sdk的使用，切记。
 
 .. image:: ./images/win_python_setup1.png
 
-2. 双击下载好的安装文件，然后点击“下一步”，需要注意的是，我们应该选择自定义安装并勾选自动添加环境变量，如下图所示。
+
+2. 步骤（1）：确认安装包版本是 ``64-bit``, 否则会影响Python sdk使用。
+
+   步骤（2）：勾选 ``Add Python 3.7 to Path``。
+
+   步骤（3）：选择 ``Install Now`` 进行安装，如下图所示。
 
 .. image:: ./images/win_python_setup2.png
 
-3. 点击“下一步”，手动选择安装路径，如下图所示。
 
-.. image:: ./images/win_python_setup3.png
+3. 安装完成后按 ``win+r``，在弹出窗口中输入 ``cmd`` 打开命令提示符界面，在命令行里面输入 ``python``, 确认 Python 3.7.8 安装成功。
 
-4. 安装完成后按 ``win+r``，在弹出窗口中输入 ``cmd`` 打开命令提示符界面，在命令行里面输入 ``python -V``, 确认 Python 3.7.8 安装成功。
+.. image:: ./images/python_version.png
+
+.. note:: cmd窗口会显示对应的版本信息，否则，请从第一步重新安装
+
 
 在 Ubuntu 上安装 Python
 -------------------------
 
 **环境：** ubuntu 16.04 64 位，Python 3.7.8
 
-1. Ubuntu16.04 默认安装了Python2.7和3.5，输入命令 ``python -V``，可以查看 Python 默认版本。请注意，系统自带的python千万不能卸载。
+1. Ubuntu16.04 默认安装了Python2.7和3.5，输入命令 ``python``，可以查看 Python 默认版本。请注意，系统自带的python千万不能卸载。
 
 2. 输入如下命令安装 python 3.7 软件包：
 
@@ -52,6 +61,6 @@
 		sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
 		sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
 
-4. 此时再输入命令 ``python -V`` ，确认 Python 3.7 安装成功。
+4. 此时再输入命令 ``python`` ，确认 Python 3.7 安装成功。
 
 

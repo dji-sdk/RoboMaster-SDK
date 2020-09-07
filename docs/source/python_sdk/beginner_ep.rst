@@ -268,7 +268,7 @@ SDK 将对应的任务发送给机器人，机器人收到任务后会选择执�
 如果选择执行任务，会在任务完成时再次告知 SDK。在使用任务动作控制接口时，用户需要注意以下两点：
 
 - 任务动作接口的返回值为 `action` 对象，`action` 对象提供 `wait_for_completed(timeout)` 方法，
-  用户可以通过 `timeout` 参数指定动作的超时时长。当调用 `wait_for_completed(timeout)`方法时，
+  用户可以通过 `timeout` 参数指定动作的超时时长。当调用 `wait_for_completed(timeout)` 方法时，
   程序会阻塞在该语句，直至动作执行完毕或执行超时
 
 - 同一模块同一时间只能执行一个动作， 因此同一模块的任务之间互斥；不同模块之间的相互独立，动作可以同时执行。
@@ -303,7 +303,7 @@ SDK 将对应的任务发送给机器人，机器人收到任务后会选择执�
   本示例中指定 `xy` 轴的运动速度为 0.7 m/s, `z` 轴的旋转速度设置为 0。
   设置装甲灯灯效可以参考 `示例二：设置机器人装甲灯`_ 。接下来本文档会使用三种方法控制底盘移动的任务动作：
 
-  - 方法一：执行任务动作后，立即调用 `wait_for_completed()`方法::
+  - 方法一：执行任务动作后，立即调用 `wait_for_completed()` 方法::
 
      ep_chassis.move(x=x_val, y=0, z=0, xy_speed=0.7).wait_for_completed()
      ep_led.set_led(comp=led.COMP_ALL, r=255, g=0, b=0, effect=led.EFFECT_ON)
