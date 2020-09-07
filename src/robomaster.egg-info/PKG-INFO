@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: robomaster
+Version: 0.1.1.35
+Summary: RoboMaster Python SDK
+Home-page: http://www.robomaster.com
+Author: EDU SDK TEAM
+License: The GUN General Public License v3.0 or later
+Description: 
+        RoboMaster SDK is based on the Python language and is suitable for the Python SDK software library
+         of the RoboMater series.
+        Currently applicable to RoboMaster EP and Tello Edu and other products, it provides a rich API interface,
+        including: motion control, flight control, intelligent identification, lighting effect settings, data push,
+        video streaming and audio streaming APIs. And the design follows the principle of being as simple as possible,
+        and can be quickly used to facilitate learning and teaching. Based on each API interface,
+        there are code examples, you can refer to our developer documentation robomaster-dev.readthedocs.io.
+        
+Keywords: dji,robomaster,sdk,robot,drone
+Platform: UNKNOWN
+Description-Content-Type: text/markdown

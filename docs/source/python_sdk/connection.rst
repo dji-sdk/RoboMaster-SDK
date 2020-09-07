@@ -162,7 +162,7 @@ USB 连接模式，实质上是使用 RNDIS 协议，将机器人上的 USB 设�
 - 运行提供的示例程序 :file:`/examples/12_drone/24_set_sta.py`，
   将程序中的 `ssis` 与 `password` 参数改为当前使用的路由器的账号与密码
 
-.. literalinclude:: ./../../..//examples/12_drone/24_set_sta.py
+.. literalinclude:: ./../../..//examples/12_drone/23_set_sta.py
    :language: python
    :linenos:
    :lines: 17-
