@@ -43,7 +43,7 @@ RoboMaster EP 作为一款教育机器人，具有强大的扩展性和可编程
 - :doc:`快速开始 <./introduction>`
 	本章将简要概述 RoboMaster EP 教育套装和本网站内容，提供编程环境的安装方法，介绍 RoboMaster EP  如何跟第三方平台进行通信，以帮助用户扩展更加丰富的功能。
 
-- :doc:`Python SDK <./python_sdk/intro>`
+- :doc:`Python SDK <./python_sdk/installs>`
     RoboMaster SDK 是基于Python语言实现的，适用于RoboMater 机甲大师系列的 Python SDK 软件库。 目前适用于RoboMaster EP 和 Tello Edu 等系列产品，提供了丰富的API接口，包括: 运动控制，飞行控制，智能识别，灯效设置，数据推送，视频流和音频流等API。 并且设计上遵循尽量简单的原则，能够快速上手使用，便于学习和教学使用。
 
 - :doc:`扩展模块/扩展接口说明 <./extension_module/robotic_arm_and_gripper>`

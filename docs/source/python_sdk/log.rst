@@ -10,7 +10,7 @@ ____________
 
 RoboMaster SDK 的日志等级默认为ERROR，用户可根据自己的需要进行修改。
 
-- 设置日志等级的语句为:file:`/examples/01_robot/00_logger.py`中该行代码::
+- 设置日志等级的语句为 :file:`/examples/01_robot/00_logger.py` 中该行代码::
 
     logger.setLevel(logging.ERROR)
 

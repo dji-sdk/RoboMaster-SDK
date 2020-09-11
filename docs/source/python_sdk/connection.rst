@@ -84,6 +84,10 @@ USB 连接模式，实质上是使用 RNDIS 协议，将机器人上的 USB 设�
 
 	.. centered:: DJI 妙算、Jetson Nano 或 PC 路由连接至 EP
 
+- 安装myqr库生成二维码，按 ``win+r``，在弹出窗口中输入 ``cmd`` 打开命令提示符界面，在命令行里面输入::
+
+   pip install myqr
+
 - 参考sdk代码 :file:`/examples/01_robot/05_sta_conn_helper.py` 目录下的例程（`GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_）
 
 .. literalinclude:: ./../../../examples/01_robot/05_sta_conn_helper.py
@@ -159,7 +163,7 @@ USB 连接模式，实质上是使用 RNDIS 协议，将机器人上的 USB 设�
 
 - 首先将飞机设置为 *直连模式*，并且与运行SDK的设备连接，具体操作参考上一小节
 
-- 运行提供的示例程序 :file:`/examples/12_drone/24_set_sta.py`，
+- 运行提供的示例程序 :file:`/examples/12_drone/23_set_sta.py` （`GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_），
   将程序中的 `ssis` 与 `password` 参数改为当前使用的路由器的账号与密码
 
 .. literalinclude:: ./../../..//examples/12_drone/23_set_sta.py
