@@ -29,7 +29,7 @@ RoboMaster SDK 安装
 
 安装RoboMaster SDK，可输入以下指令::
 
-    pip3 install robomaster
+    pip install robomaster
 
 
 升级 RoboMaster SDK
@@ -37,7 +37,7 @@ RoboMaster SDK 安装
 
 当需要升级 RoboMaster SDK时，可在命令行中输入以下指令::
 
-    pip3 install --upgrade robomaster
+    pip install --upgrade robomaster
 
 
 
@@ -60,7 +60,7 @@ Python 环境安装
 
 安装 RoboMaster SDK，可输入以下指令::
 
-    pip3 install robomaster
+    pip install robomaster
 
 
 升级 RoboMaster SDK
@@ -68,7 +68,7 @@ Python 环境安装
 
 当需要升级 RoboMaster SDK时，可在命令行中输入以下指令::
 
-    pip3 install --upgrade robomaster
+    pip install --upgrade robomaster
 
 
 
@@ -81,7 +81,7 @@ Python 环境安装
 
 安装RoboMaster SDK，可输入以下指令::
 
-    pip3 install robomaster
+    pip install robomaster
 
 
 升级 RoboMaster SDK
@@ -89,5 +89,5 @@ Python 环境安装
 
 当需要升级 RoboMaster SDK时，可在命令行中输入以下指令::
 
-    pip3 install --upgrade robomaster
+    pip install --upgrade robomaster
 
