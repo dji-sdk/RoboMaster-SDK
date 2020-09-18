@@ -14,11 +14,10 @@
 # limitations under the License.
 
 
+import sys
 import time
 import random
 import threading
-from netaddr import IPNetwork
-import socket
 from robomaster import protocol
 from robomaster import conn
 from robomaster import robot
@@ -27,6 +26,7 @@ from robomaster import config
 from . import logger
 from . import tool
 from . import multi_group
+from . import multi_module
 
 
 ROBOT_ID = 0
@@ -100,7 +100,7 @@ class MultiRobotBase(object):
         for robot_id, robot_sn in args:
             if robot_sn not in robots_sn_dict.keys():
                 raise Exception("Robot SN {0} is not exist!".format(robot_sn))
-            elif robot_id in self._robots_dict.keys(3):
+            elif robot_id in self._robots_dict.keys():
                 raise Exception("Id {0} cannot be reused!".format(robot_id))
             elif robot_sn in self._robots_dict.values():
                 raise Exception("SN {0} has been numbered!".format(robot_sn))
@@ -257,114 +257,116 @@ class MultiEP(MultiRobotBase):
 class MultiDrone(MultiRobotBase):
 
     def __init__(self):
-        super().__init__()
-        self._scan_socket = None
+        self.robot_num = 0
+        self._client = tool.TelloClient()
+        self.tello_action = None
+        self._robot_host_list = []
+        self._group_list = []
+        self._robot_id_dict = {}
+        self._robot_sn_dict = {}
+        self._robot_host_dict = {}
 
-    def build_group(self, robot_id_list):
-        """build a group that contains input robots
+    def initialize(self, robot_num):
+        self.robot_num = robot_num
+        self._client.start()
+        self._robot_host_list = self._client.scan_multi_robot(robot_num)
 
-        :param robot_id_list:
-        :return:
-        """
-        check_result, robot_id = tool.check_robots_id(robot_id_list, self._robots_dict)
-        if not check_result:
-            raise Exception("Robot Id %d is not exist" % robot_id)
-        robot_group = multi_group.TelloGroup(robot_id_list, self._robots_dict)
-        robot_group.initialize()
-        self._group_list.append(robot_group)
-        logger.info("MultiRobot: build_group successfully, group.robots_in_group_list : {0}".format(
-            robot_group._robots_id_in_group_list))
-        return robot_group
-
-    def _scan_ip(self, num):
-        """Find avaliable ip list in server's subnets
-
-        :param num: Number of Tello this method is expected to find
-        :return: None
-        """
-        logger.info('[Start_Searching]Searching for %s available Tello...\n' % num)
-
-        subnets, address = tool.get_subnets()
-        possible_addr = []
-
-        for subnet, netmask in subnets:
-            for ip in IPNetwork('%s/%s' % (subnet, netmask)):
-                # skip local and broadcast
-                if str(ip).split('.')[3] == '0' or str(ip).split('.')[3] == '255':
-                    continue
-                possible_addr.append(str(ip))
-
-        while len(self._robot_ip_list) < num:
-            logger.info('[Still_Searching]Trying to find Tello in subnets...\n')
-
-            # delete already fond Tello ip
-            for tello_ip in self._robot_ip_list:
-                if tello_ip in possible_addr:
-                    possible_addr.remove(tello_ip)
-            # skip server itself
-            for ip in possible_addr:
-                if ip in address:
-                    continue
-                self._scan_socket.sendto(b'command', (ip, 8889))
-            if len(self._robot_ip_list) >= num:
-                break
-            time.sleep(2)
-        return self._robot_ip_list
+    def close(self):
+        self._client.close()
 
     def _scan_multi_robot(self, num=0):
-        """ Automatic scanning of robots in the network
+        self.initialize(num)
+        _robot_ip_list = [host[0] for host in self._robot_host_list]
+        return _robot_ip_list
 
-        :param num:
-        :return:
-        """
-        if config.LOCAL_IP_STR:
-            local_ip = config.LOCAL_IP_STR
-        else:
-            local_ip = conn.get_local_ip()
-        local_port = 8889
-        local_addr = (local_ip, local_port)
-        self._scan_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # socket for sending cmd
-        self._scan_socket.bind(local_addr)
-        # thread for receiving cmd ack
-        receive_thread = threading.Thread(target=self._receive_task, args=(num, ))
-        # receive_thread.daemon = True
-        receive_thread.start()
-        robot_list = []
-        # scan by number
-        ip_list = self._scan_ip(num)
-        for ip in ip_list:
-            te_ap_conf = config.te_conf
-            if config.LOCAL_IP_STR:
-                local_ip = config.LOCAL_IP_STR
-            else:
-                local_ip = conn.get_local_ip()
-            local_port = random.randint(config.ROBOT_SDK_PORT_MIN, config.ROBOT_SDK_PORT_MAX)
-            local_addr = (local_ip, local_port)
-            te_ap_conf.default_sdk_addr = (local_addr)
-            te_ap_conf.default_cmd_addr = (ip, te_ap_conf.default_cmd_addr_port)
-            logger.info("MultiDrone: _scan_multi_robot, dron ip {0} uses addr {1}".format(
-                te_ap_conf.default_cmd_addr, local_addr))
-            drone_client = client.TextClient(te_ap_conf)
-            drone_obj = robot.Drone(drone_client)
-            if not hasattr(robot.Drone, "ip_addr"):
-                drone_obj.ip_addr = ip
-                robot_list.append(drone_obj)
-        self._scan_socket.close()
-        return robot_list
+    @staticmethod
+    def reset_all_robot():
+        logger.warning("Drone obj does not support this api \napi name:{}\napi location:{}"
+                       .format(sys._getframe().f_code.co_name, sys._getframe().f_lineno))
 
-    def _receive_task(self, num):
-        """Listen to responses from the Tello when scan the devices.
+    @staticmethod
+    def all_robots():
+        logger.warning("Drone obj does not support this api \napi name:{}\napi location:{}"
+                       .format(sys._getframe().f_code.co_name, sys._getframe().f_lineno))
 
-        :param:num:
-        """
-        while len(self._robot_ip_list) < num:
-            try:
-                resp, ip = self._scan_socket.recvfrom(1024)
-                logger.info("FoundTello: from ip {1}_receive_task, recv msg: {0}".format(resp, ip))
-                ip = ''.join(str(ip[0]))
-                if resp.upper() == b'OK' and ip not in self._robot_ip_list:
-                    logger.info('FoundTello: Found Tello.The Tello ip is:%s\n' % ip)
-                    self._robot_ip_list.append(ip)
-            except socket.error as exc:
-                logger.error("[Exception_Error]Caught exception socket.error : {0}\n".format(exc))
-        logger.info("FoundTello: has finished, recv_task quit!")
+    @property
+    def robots_num(self):
+        return len(self._robot_host_list)
+
+    def run(self, *exec_list):
+        _groups_exec_dict = {}
+        robot_group_host_list = []
+        for robot_group, group_task in exec_list:
+            if robot_group not in self._group_list:
+                raise Exception('Input group', robot_group, 'is not built')
+            self.tello_action = multi_module.TelloAction(self._client, self._robot_id_dict, self._robot_sn_dict,
+                                                         self._robot_host_dict)
+            exec_thread = threading.Thread(target=group_task, args=(self.tello_action.action_group(robot_group),))
+            _groups_exec_dict[robot_group] = exec_thread
+            robot_group_host_list.append(robot_group.robot_group_host_list)
+
+        # don't allow the same drone run in different group
+        result = tool.check_group_host(robot_group_host_list)
+        if result is False:
+            # todo BUG: low probability to has same id in one single group in number_id_to_all_drone api
+            raise Exception("different running groups has same id")
+
+        for robot_group, exec_thread in _groups_exec_dict.items():
+            # todo 多task同步待添加
+            exec_thread.start()
+
+        for robot_group, exec_thread in _groups_exec_dict.items():
+            exec_thread.join()
+        logger.info("MultiRobotBase: run, Action is completed")
+
+    def build_group(self, robot_id_group_list):
+        check_result, robot_id = tool.check_robots_id(robot_id_group_list, self._robot_id_dict)
+        if not check_result:
+            raise Exception("Robot Id %d is not exist" % robot_id)
+        tello_groups = multi_group.TelloGroup(robot_id_group_list, self._robot_id_dict, self._robot_sn_dict)
+        self._group_list.append(tello_groups)
+        return tello_groups
+
+    def send_command(self, text, host_list=None):
+        if host_list is None:
+            host_list = self._robot_host_list
+        for host in host_list:
+            proto = tool.TelloProtocol(text, host)
+            self._client.send(proto)
+
+    def _get_sn(self, timeout):
+        self.send_command("sn?")
+        cur_time = time.time()
+        while self._client.queue.qsize() < self.robot_num:
+            if time.time() - cur_time > timeout:
+                raise Exception("get sn timeout")
+
+        while not self._client.queue.empty():
+            proto = self._client.queue.get()
+            if proto.text is None:
+                raise Exception("recv data is None")
+            self._robot_sn_dict[proto.text] = proto.host  # find host by sn
+            time.sleep(0.1)   # Tello BUG that reply ok in sn? command response
+
+    def number_id_by_sn(self, *id_sn: list, timeout=3):
+        if not isinstance(id_sn, tuple) and not isinstance(id_sn, list):
+            raise Exception("input type must be list or tuple")
+
+        self._get_sn(timeout)
+        for id_, sn in id_sn:
+            host = self._robot_sn_dict.get(sn, None)
+            if host is None:
+                raise Exception("Tello {} does not exits".format(sn))
+            if self._robot_id_dict.get(id_, None) is not None:
+                # one single id correspond to one single sn
+                raise Exception("id: {} has already exited".format(id_))
+            self._robot_id_dict[id_] = sn  # find sn by id
+            self._robot_host_dict[host] = [id_]  # find id by host
+
+    def number_id_to_all_drone(self, timeout=10):
+        # number all drone num that initialize by self.initialize() from 0 to oo
+        self._get_sn(timeout)
+        for id_, item in enumerate(self._robot_sn_dict.items()):
+            sn, host = item
+            self._robot_id_dict[id_] = sn  # find sn by id
+            self._robot_host_dict[host] = [id_]  # find id by host

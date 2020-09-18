@@ -752,7 +752,6 @@ class Drone(RobotBase):
                         logger.warning("Drone: resp {0}".format(proto.resp))
                 logger.warning("Drone: set_wifichannel failed")
             return False
-
         except Exception as e:
             logger.warning("Drone: set_wifichannel, send_sync_msg exception {0}".format(str(e)))
             return False

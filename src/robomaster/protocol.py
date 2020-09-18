@@ -2185,7 +2185,7 @@ class STAConnInfo:
             buf = bytearray(2 + 8 + 2 + ssid_len + pwd_len + 6)
         else:
             buf = bytearray(2 + 8 + 2 + ssid_len + pwd_len)
-        buf[0] = ssid_len | (pwd_len & 0x3) << 5
+        buf[0] = ssid_len | (pwd_len & 0x3) << 6
         buf[1] = (pwd_len >> 2) | (self._has_bssid << 3)
         buf[2:10] = self._appid.encode(encoding="utf-8")
         buf[10:12] = self._cc.encode(encoding="utf-8")

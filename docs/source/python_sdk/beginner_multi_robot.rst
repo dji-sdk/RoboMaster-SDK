@@ -24,6 +24,15 @@ __________________
 多机初始化
 __________________
 
+环境准备安装netifaces包::
+	
+	pip install netifaces
+	
+.. tip:: 如果出现以下问题，请下载安装visualcppbuildtools_full.exe(`下载地址：GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_) 
+
+	.. image:: ./../images/neti_err.jpg
+
+
 1. 首先将机器人设置为路由器组网模式，并将所有机器人与运行 RobomasterSDK 的设备连接至同一个局域网内。
 关于本部分如何操作，RobomasterEP参考 :ref:`EpConn` ，教育飞机参考 :ref:`TelloConn`
 
@@ -156,9 +165,9 @@ _________________________
 
     - 示例一：假设前面的准备工作都已经完成，`drone_group` 为获取到的“组对象”，可以通过以下代码实现组内的教育飞机依次起飞::
 
-        for drone_id in drone_group.robot_id_list:
+        for drone_id in drone_group.robots_id_list:
             drone_obj = drone_group.get_robot(drone_id)
-            drone_obj.takeoff().wait_for_completed()
+            drone_obj.flight.takeoff().wait_for_completed()
 
 任务控制
 __________________

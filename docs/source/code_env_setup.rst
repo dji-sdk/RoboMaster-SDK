@@ -9,6 +9,7 @@
 
 为了让用户尽快熟悉 EP 的各个模块和功能，并方便使用本网站中的 Python 示例代码，我们介绍一下 Python 在 PC 上的安装步骤。
 
+
 在 Windows 上安装 Python
 -------------------------
 
@@ -16,7 +17,7 @@
 
 1. 从 `python 官网上 <https://www.python.org/downloads/windows/>`_ 找到可以下载的安装包，以Python3.7.8 为例，选择安装文件进行下载。
 
-.. warning:: 请确保下载的 `python.exe` 是64位的，否则会影响python sdk的使用，切记。
+.. warning:: 请确保下载的 `python.exe` 是64位的，python sdk适配3.6.6以上python版本，否则会影响python sdk的使用，切记。
 
 .. image:: ./images/win_python_setup1.png
 

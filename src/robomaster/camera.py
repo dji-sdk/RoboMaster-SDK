@@ -137,6 +137,81 @@ class TelloCamera(Camera):
         if self._liveview:
             self._liveview.stop()
 
+    def set_fps(self, fps):
+        """ 设置飞机视频帧率
+
+        :param fps: 需要设置的帧率，[high, middle, low]
+        :return: bool: 设置结果
+        """
+        cmd = "setfps {0}".format(fps)
+        proto = protocol.TextProtoDrone()
+        proto.text_cmd = cmd
+        msg = protocol.TextMsg(proto)
+        try:
+            resp_msg = self._client.send_sync_msg(msg)
+            if resp_msg:
+                proto = resp_msg.get_proto()
+                if proto:
+                    if proto.resp.lower().startswith(protocol.TextProtoData.SUCCESSFUL_RESP_FLAG):
+                        return True
+                    else:
+                        logger.warning("Drone: resp {0}".format(proto.resp))
+                logger.warning("Drone: set_fps failed")
+            return False
+        except Exception as e:
+            logger.warning("Drone: set_fps, send_sync_msg exception {0}".format(str(e)))
+            return False
+
+    def set_bitrate(self, bitrate):
+        """ 设置飞机传输码率
+
+        :param bitrate: 需要设置的传输码率，[0, 6]
+        :return: bool: 设置结果
+        """
+        cmd = "setbitrate {0}".format(bitrate)
+        proto = protocol.TextProtoDrone()
+        proto.text_cmd = cmd
+        msg = protocol.TextMsg(proto)
+        try:
+            resp_msg = self._client.send_sync_msg(msg)
+            if resp_msg:
+                proto = resp_msg.get_proto()
+                if proto:
+                    if proto.resp.lower().startswith(protocol.TextProtoData.SUCCESSFUL_RESP_FLAG):
+                        return True
+                    else:
+                        logger.warning("Drone: resp {0}".format(proto.resp))
+                logger.warning("Drone: set_bitrate failed")
+            return False
+        except Exception as e:
+            logger.warning("Drone: set_bitrate, send_sync_msg exception {0}".format(str(e)))
+            return False
+
+    def set_resolution(self, resolution):
+        """ 设置飞机视频分辨率
+
+        :param resolution: 需要设置的视频分辨率，[high, low]
+        :return: bool: 设置结果
+        """
+        cmd = "setresolution {0}".format(resolution)
+        proto = protocol.TextProtoDrone()
+        proto.text_cmd = cmd
+        msg = protocol.TextMsg(proto)
+        try:
+            resp_msg = self._client.send_sync_msg(msg)
+            if resp_msg:
+                proto = resp_msg.get_proto()
+                if proto:
+                    if proto.resp.lower().startswith(protocol.TextProtoData.SUCCESSFUL_RESP_FLAG):
+                        return True
+                    else:
+                        logger.warning("Drone: resp {0}".format(proto.resp))
+                logger.warning("Drone: set_resilution failed")
+            return False
+        except Exception as e:
+            logger.warning("Drone: set_resilution, send_sync_msg exception {0}".format(str(e)))
+            return False
+
 
 class EPCamera(module.Module, Camera):
     """ EP 摄像机模块 """

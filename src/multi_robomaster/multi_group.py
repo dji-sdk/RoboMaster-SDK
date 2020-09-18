@@ -14,6 +14,7 @@
 # limitations under the License.
 
 
+import sys
 import time
 from . import multi_module
 from . import logger
@@ -185,7 +186,7 @@ class RMGroup(RobotGroupBase):
     def _scan_group_module(self):
         _chassis = multi_module.MultiRmModule(self, 'Chassis')
         _gimbal = multi_module.MultiRmModule(self, 'Gimbal')
-        _blaster = multi_module.MultiRmModule(self, 'blaster')
+        _blaster = multi_module.MultiRmModule(self, 'Blaster')
         _led = multi_module.MultiRmModule(self, 'Led')
         _robotic_arm = multi_module.MultiRmModule(self, 'RoboticArm')
         _gripper = multi_module.MultiRmModule(self, 'Gripper')
@@ -270,38 +271,28 @@ class RMGroup(RobotGroupBase):
 
 class TelloGroup(RobotGroupBase):
 
-    def __init__(self, robots_group_list, all_robots_dict):
-        super().__init__(robots_group_list, all_robots_dict)
+    def __init__(self, robot_id_group_list, _robot_id_dict={}, _robot_host_dict={}):
+        super().__init__(robot_id_group_list, _robot_id_dict)
+        self._robot_host_dict = _robot_host_dict
+        self._robot_group_host_list = []
 
-    def _scan_group_module(self):
-        _flight = multi_module.MultiDroneModule(self, 'Flight')
-        _battery = multi_module.MultiDroneModule(self, 'TelloBattery')
-        _sensor = multi_module.MultiDroneModule(self, 'TelloDistanceSensor')
-        _led = multi_module.MultiDroneModule(self, 'TelloLed')
-        self._group_modules_dict[_flight.name] = _flight
-        self._group_modules_dict[_battery.name] = _battery
-        self._group_modules_dict[_sensor.name] = _sensor
-        self._group_modules_dict[_led.name] = _led
+        self.init()
 
-    def set_group_robots_mode(self, mode=0):
-        pass
+    def init(self):
+        for robot_id in self._robots_id_in_group_list:
+            sn = self._all_robots_dict[robot_id]
+            host = self._robot_host_dict[sn]
+            self._robot_group_host_list.append(host)
 
-    @property
-    def sensor(self):
-        """ 获取传感器对象 """
-        return self.get_group_module("TelloDistanceSensor")
+    def get_sn(self):
+        """ find sn in group"""
+        return [self._all_robots_dict[robot_id] for robot_id in self._robots_id_in_group_list]
 
     @property
-    def led(self):
-        """ 获取led对象 """
-        return self.get_group_module("TelloLed")
+    def robot_group_host_list(self):
+        return self._robot_group_host_list
 
-    @property
-    def flight(self):
-        """ 获取飞行器模块对象 """
-        return self.get_group_module("Flight")
-
-    @property
-    def battery(self):
-        """ 获取电池模块对象 """
-        return self.get_group_module("TelloBattery")
+    @staticmethod
+    def get_robot():
+        logger.warning("Drone obj does not support this api \napi name:{}\napi location:{}"
+                       .format(sys._getframe().f_code.co_name, sys._getframe().f_lineno))

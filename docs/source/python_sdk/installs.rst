@@ -22,15 +22,20 @@ RoboMaster SDK 安装
 
 .. image:: ./../images/vc_exe.png
 
+.. warning:: 不安装VC库，使用SDK，会引起以下问题:
+
+	.. image:: ./../images/libmedia_err.png
 
 安装robomaster python sdk
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-安装RoboMaster SDK，可输入以下指令::
+安装RoboMaster SDK，点开开始菜单，在搜索框中输入 ``cmd`` ，在搜索结果中，对着命令提示符程序，单击鼠标右键，菜单中点击选择 ``以管理员身份运行`` ,并输入以下指令::
 
     pip install robomaster
 
+.. tip:: 如果出现下列情况，请参考以下链接进行python环境安装：:doc:`python编程环境安装 <./../code_env_setup>`  
+	
+	.. image:: ./../images/pip_install_error.jpg
 
 升级 RoboMaster SDK
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,6 +66,7 @@ Python 环境安装
 安装 RoboMaster SDK，可输入以下指令::
 
     pip install robomaster
+
 
 
 升级 RoboMaster SDK

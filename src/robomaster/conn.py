@@ -359,6 +359,7 @@ class StreamConnection(object):
                 self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self._sock.settimeout(3)
                 logger.info("StreamConnection: try to connect {0}".format(addr))
+                time.sleep(0.1)
                 self._sock.connect(addr)
             elif ip_proto == "udp":
                 self._sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
