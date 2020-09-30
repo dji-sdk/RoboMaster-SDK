@@ -17,19 +17,20 @@ from multi_robomaster import multi_robot
 
 
 def basic_task(robot_group):
-    sn_info_dict = robot_group.get_sn()
-    battery_info_dict = robot_group.battery.get_battery()
-    print("Example: sn {0}, soc {1}".format(sn_info_dict, battery_info_dict))
+    robot_group.get_sn()
+    robot_group.get_battery()
 
 
 if __name__ == '__main__':
-    tello_ip_list = ['0TQZH79ED00H96', '0TQZH79ED00H5U']
+    # get drone sn by run the expamles of /15_multi_robot/multi_drone/01_scan_ip.py
+
+    robot_sn_list = ["0TQZH79ED00H56", "0TQZH79ED00H89"]
     sn_list = []
     battery_list = []
     drone_num = 2
     multi_drone = multi_robot.MultiDrone()
-    multi_drone.initialize(2)
-    multi_drone.number_id_by_sn([0, tello_ip_list[0]], [1, tello_ip_list[1]])
+    multi_drone.initialize(robot_num=2)
+    multi_drone.number_id_by_sn([0, robot_sn_list[0]], [1, robot_sn_list[1]])
     tello_group = multi_drone.build_group([0, 1])
     multi_drone.run([tello_group, basic_task])
     multi_drone.close()

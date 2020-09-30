@@ -101,9 +101,10 @@ class TelloCamera(Camera):
                                                  ip_proto=vs_proto)
 
     def stop_video_stream(self):
+        flag = self._liveview.stop_video_stream()
         self._video_stream(0)
         self._video_enable = False
-        return self._liveview.stop_video_stream()
+        return flag
 
     def _video_stream(self, on_off=1):
         cmd = ""

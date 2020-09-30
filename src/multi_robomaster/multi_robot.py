@@ -182,7 +182,7 @@ class MultiEP(MultiRobotBase):
         :return:
         """
         robot_list = []
-        ip_list = conn.scan_robot_ip_list(3)
+        ip_list = conn.scan_robot_ip_list(10)
         for i, ip in enumerate(ip_list):
             sdk_conn = conn.SdkConnection()
             proxy_addr = (ip, config.ROBOT_PROXY_PORT)
@@ -192,11 +192,11 @@ class MultiEP(MultiRobotBase):
             if config.LOCAL_IP_STR:
                 proto._ip = config.LOCAL_IP_STR
             else:
-                proto._ip = conn.get_local_ip()
+                proto._ip = '0.0.0.0'
             proto._port = random.randint(config.ROBOT_SDK_PORT_MIN, config.ROBOT_SDK_PORT_MAX)
             msg = protocol.Msg(robot.ROBOT_DEFAULT_HOST, protocol.host2byte(9, 0), proto)
-
             result, local_ip = sdk_conn.switch_remote_route(msg, proxy_addr)
+            proto._ip = local_ip
             logger.info("request connection ip:{0} port:{1}".format(proto._ip, proto._port))
             if result:
                 conn1 = conn.Connection((proto._ip, proto._port), (ip, config.ROBOT_DEVICE_PORT),
@@ -266,7 +266,7 @@ class MultiDrone(MultiRobotBase):
         self._robot_sn_dict = {}
         self._robot_host_dict = {}
 
-    def initialize(self, robot_num):
+    def initialize(self, robot_num=0):
         self.robot_num = robot_num
         self._client.start()
         self._robot_host_list = self._client.scan_multi_robot(robot_num)
@@ -323,7 +323,8 @@ class MultiDrone(MultiRobotBase):
         check_result, robot_id = tool.check_robots_id(robot_id_group_list, self._robot_id_dict)
         if not check_result:
             raise Exception("Robot Id %d is not exist" % robot_id)
-        tello_groups = multi_group.TelloGroup(robot_id_group_list, self._robot_id_dict, self._robot_sn_dict)
+        tello_groups = multi_group.TelloGroup(self._client, robot_id_group_list,
+                                              self._robot_id_dict, self._robot_sn_dict)
         self._group_list.append(tello_groups)
         return tello_groups
 
@@ -334,7 +335,7 @@ class MultiDrone(MultiRobotBase):
             proto = tool.TelloProtocol(text, host)
             self._client.send(proto)
 
-    def _get_sn(self, timeout):
+    def _get_sn(self, timeout=0):
         self.send_command("sn?")
         cur_time = time.time()
         while self._client.queue.qsize() < self.robot_num:
@@ -347,6 +348,8 @@ class MultiDrone(MultiRobotBase):
                 raise Exception("recv data is None")
             self._robot_sn_dict[proto.text] = proto.host  # find host by sn
             time.sleep(0.1)   # Tello BUG that reply ok in sn? command response
+
+        return self._robot_sn_dict
 
     def number_id_by_sn(self, *id_sn: list, timeout=3):
         if not isinstance(id_sn, tuple) and not isinstance(id_sn, list):

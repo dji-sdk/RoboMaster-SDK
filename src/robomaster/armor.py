@@ -92,6 +92,32 @@ class ArmorHitEvent(dds.Subject):
         self._armor_id, self._type, self._mic_value = buf
 
 
+class IrHitEvent(dds.Subject):
+    name = "ir_event"
+    cmdset = 0x3f
+    cmdid = 0x10
+    type = dds.DDS_SUB_TYPE_EVENT
+
+    def __init__(self):
+        self._skill_id = 0
+        self._role_id = 0
+        self._recv_dev = 0
+        self._recv_ir_pin = 0
+        self._hit_cnt = 0
+
+    @property
+    def hit_times(self):
+        """ 受到红外打击的次数 """
+        return self._hit_cnt
+
+    def data_info(self):
+        return self._hit_cnt
+
+    def decode(self, buf):
+        self._hit_cnt = self._hit_cnt + 1
+        self._skill_id, self._role_id, self._recv_dev, self._recv_ir_pin = buf
+
+
 class Armor(module.Module):
     _host = protocol.host2byte(24, 1)
 
@@ -115,6 +141,21 @@ class Armor(module.Module):
         protocol.ProtoArmorHitEvent()
         return sub.add_subject_event_info(subject, callback, args, kw)
 
+    def sub_ir_event(self, callback=None, *args, **kw):
+        """ 红外打击事件订阅
+
+        :param callback: 回调函数, 返回数据 (hit_cnt)
+        :param hit_cnt: 受到红外击打的次数
+
+        :param args: 可变参数
+        :param kw: 关键字参数
+        :return: bool: 事件订阅结果
+        """
+        sub = self._robot.dds
+        subject = IrHitEvent()
+        protocol.ProtoIrHitEvent()
+        return sub.add_subject_event_info(subject, callback, args, kw)
+
     def unsub_hit_event(self):
         """ 取消打击事件订阅
 
@@ -122,6 +163,15 @@ class Armor(module.Module):
         """
         sub = self._robot.dds
         subject = ArmorHitEvent()
+        return sub.del_subject_event_info(subject)
+
+    def unsub_ir_event(self):
+        """ 取消红外打击事件订阅
+
+        :return: bool: 取消事件订阅结果
+        """
+        sub = self._robot.dds
+        subject = IrHitEvent()
         return sub.del_subject_event_info(subject)
 
     def set_hit_sensitivity(self, comp=COMP_ALL, sensitivity=5):

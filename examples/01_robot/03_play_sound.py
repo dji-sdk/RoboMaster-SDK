@@ -29,5 +29,12 @@ if __name__ == '__main__':
     ep_robot.play_sound(robot.SOUND_ID_RECOGNIZED).wait_for_completed()
     ep_robot.play_sound(robot.SOUND_ID_GIMBAL_MOVE).wait_for_completed()
     ep_robot.play_sound(robot.SOUND_ID_COUNT_DOWN).wait_for_completed()
+    ep_robot.play_sound(robot.SOUND_ID_1A).wait_for_completed()
+    ep_robot.play_sound(robot.SOUND_ID_1B).wait_for_completed()
+    ep_robot.play_sound(robot.SOUND_ID_1C).wait_for_completed()
+    ep_robot.play_sound(robot.SOUND_ID_1D).wait_for_completed()
+    ep_robot.play_sound(robot.SOUND_ID_1E).wait_for_completed()
+    ep_robot.play_sound(robot.SOUND_ID_1F).wait_for_completed()
+
 
     ep_robot.close()

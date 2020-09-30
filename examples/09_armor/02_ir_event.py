@@ -13,25 +13,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cv2
+
+import random
+import time
+import robomaster
 from robomaster import robot
+from robomaster import armor
+
+
+def hit_callback(sub_info, ep_robot):
+    # 被击打次数
+    hit_cnt = sub_info
+    print("hit event: hit_cnt:{0}".format(hit_cnt))
+    # 受到红外击打后变换所有装甲的颜色
+    ep_led = ep_robot.led
+    ep_led.set_led(comp="all", r=random.randint(0, 255), g=random.randint(0, 255), b=random.randint(0, 255))
 
 
 if __name__ == '__main__':
-    tl_drone = robot.Drone()
-    tl_drone.initialize()
+    ep_robot = robot.Robot()
+    ep_robot.initialize(conn_type="ap")
 
-    tl_camera = tl_drone.camera
-    # 显示302帧图传
-    tl_camera.start_video_stream(display=False)
-    tl_camera.set_fps("high")
-    tl_camera.set_resolution("high")
-    tl_camera.set_bitrate(6)
-    for i in range(0, 302):
-        img = tl_camera.read_cv2_image()
-        cv2.imshow("Drone", img)
-        cv2.waitKey(1)
-    cv2.destroyAllWindows()
-    tl_camera.stop_video_stream()
+    ep_armor = ep_robot.armor
 
-    tl_drone.close()
+    # 订阅红外击打的事件
+    ep_armor.sub_ir_event(hit_callback, ep_robot)
+    time.sleep(15)
+    ep_armor.unsub_ir_event()
+
+    ep_robot.close()

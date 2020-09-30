@@ -33,8 +33,8 @@ RoboMaster SDK 安装
 
     pip install robomaster
 
-.. tip:: 如果出现下列情况，请参考以下链接进行python环境安装：:doc:`python编程环境安装 <./../code_env_setup>`  
-	
+.. tip:: 如果出现下列情况，请参考以下链接进行python环境安装：:doc:`python编程环境安装 <./../code_env_setup>`
+
 	.. image:: ./../images/pip_install_error.jpg
 
 升级 RoboMaster SDK

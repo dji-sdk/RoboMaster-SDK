@@ -14,8 +14,8 @@
 # limitations under the License.
 
 
-import sys
 import time
+import threading
 from . import multi_module
 from . import logger
 from . import tool
@@ -269,14 +269,42 @@ class RMGroup(RobotGroupBase):
         return self.get_group_module("Gripper")
 
 
+class SingleDroneInGroup(multi_module.TelloAction):
+
+    def __init__(self, client, _robot_id, _robot_sn, _robot_host):
+        self._client = client
+        self._robot_id = _robot_id
+        self._robot_sn = _robot_sn
+        self._robot_host = _robot_host
+        self.event = threading.Event()
+        self.robot_group_host_list = []
+        self.event.set()
+        self._dispatcher = multi_module.TelloDispatcher(self._client, self.event, {self._robot_host: self._robot_id})
+        self._dispatcher.action_host_list = [self._robot_host]
+
+    def close(self):
+        pass
+
+    def send_command(self, command):
+        self.event.wait(10)
+        if self.event.isSet():
+            logger.info("execute command：{}".format(command))
+            proto = tool.TelloProtocol(command, self._robot_host)
+            self._client.send(proto)
+            self.event.clear()
+        else:
+            self.event.set()
+            logger.warning("execute command：{}, timeout".format(command))
+
+
 class TelloGroup(RobotGroupBase):
 
-    def __init__(self, robot_id_group_list, _robot_id_dict={}, _robot_host_dict={}):
+    def __init__(self, client, robot_id_group_list, _robot_id_dict={}, _robot_host_dict={}):
         super().__init__(robot_id_group_list, _robot_id_dict)
         self._robot_host_dict = _robot_host_dict
         self._robot_group_host_list = []
-
         self.init()
+        self.client = client
 
     def init(self):
         for robot_id in self._robots_id_in_group_list:
@@ -292,7 +320,9 @@ class TelloGroup(RobotGroupBase):
     def robot_group_host_list(self):
         return self._robot_group_host_list
 
-    @staticmethod
-    def get_robot():
-        logger.warning("Drone obj does not support this api \napi name:{}\napi location:{}"
-                       .format(sys._getframe().f_code.co_name, sys._getframe().f_lineno))
+    def get_robot(self, robot_id):
+        """  get Drone obj """
+        robot_sn = self._all_robots_dict[robot_id]
+        robot_host = self._robot_host_dict[robot_sn]
+        logger.info('get robot:SN:{}, HOST:{}' .format(robot_sn, robot_host))
+        return SingleDroneInGroup(self.client, robot_id, robot_sn, robot_host)

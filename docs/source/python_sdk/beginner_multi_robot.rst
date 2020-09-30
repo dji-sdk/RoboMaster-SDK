@@ -25,10 +25,10 @@ __________________
 __________________
 
 环境准备安装netifaces包::
-	
+
 	pip install netifaces
-	
-.. tip:: 如果出现以下问题，请下载安装visualcppbuildtools_full.exe(`下载地址：GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_) 
+
+.. tip:: 如果出现以下问题，请下载安装visualcppbuildtools_full.exe(`下载地址：GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_)
 
 	.. image:: ./../images/neti_err.jpg
 

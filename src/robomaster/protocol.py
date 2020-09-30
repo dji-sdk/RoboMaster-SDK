@@ -668,6 +668,29 @@ class ProtoArmorHitEvent(ProtoData):
         return True
 
 
+class ProtoIrHitEvent(ProtoData):
+    _cmdset = 0x3f
+    _cmdid = 0x10
+    _resp_size = 0
+
+    def __init__(self):
+        self._skill_id = 0
+        self._role_id = 0
+        self._recv_dev = 0
+        self._recv_ir_pin = 0
+        self._data_buf = None
+
+    def pack_req(self):
+        return b''
+
+    def unpack_req(self, buf, offset=0):
+        self._role_id = buf[0] >> 4
+        self._skill_id = buf[0] & 0xf
+        self._recv_dev, self._recv_ir_pin = struct.unpack('<BB', buf[1:])
+        self._data_buf = [self._skill_id, self._role_id, self._recv_dev, self._recv_ir_pin]
+        return True
+
+
 class ProtoSetArmorParam(ProtoData):
     _cmdset = 0x3f
     _cmdid = 0x7
@@ -699,24 +722,6 @@ class ProtoSetArmorParam(ProtoData):
             return True
         else:
             return False
-
-
-class ProtoArmorIrEvent(ProtoData):
-    _cmdset = 0x3f
-    _cmdid = 0x10
-    _resp_size = 5
-
-    def __init__(self):
-        self._send_device = 0
-        self._recv_ir_pin = 0
-
-    def pack_req(self):
-        return b''
-
-    def unpack_resp(self, buf, offset=0):
-        self._send_device = buf[offset + 1]
-        self._recv_ir_pin = buf[offset + 2]
-        return True
 
 
 class ProtoChassisWheelSpeed(ProtoData):

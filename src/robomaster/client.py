@@ -364,7 +364,7 @@ class TextClient(object):
         try:
             self._conn.send(text.encode('utf-8'))
         except Exception as e:
-            logger.warn("TexClient: send_async_text, exception {0}".format(str(e)))
+            logger.warning("TexClient: send_async_text, exception {0}".format(str(e)))
             return False
         return True
 

@@ -29,6 +29,8 @@
     python_sdk/apis.rst
     python_sdk/modules.rst
     python_sdk/multi_robot_apis.rst
+    python_sdk/multi_robot_drone_example.rst
+    python_sdk/multi_robot_ep.rst
 
 .. toctree::
     :maxdepth: 0

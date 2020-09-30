@@ -13,11 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from robomaster import conn
 
-SDK_VERSION_MAJOR = 0
-SDK_VERSION_MINOR = 1
-SDK_VERSION_REVISION = 1
-SDK_VERSION_BUILD = 58
 
-__version__ = "{0:d}.{1:d}.{2:d}.{3:d}".format(SDK_VERSION_MAJOR, SDK_VERSION_MINOR,
-                                               SDK_VERSION_REVISION, SDK_VERSION_BUILD)
+if __name__ == '__main__':
+    # set the time for scanning ep robot
+    conn.scan_robot_ip_list(timeout=10)
+
+

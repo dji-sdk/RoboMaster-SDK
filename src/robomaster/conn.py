@@ -134,6 +134,7 @@ def scan_robot_ip_list(timeout=3.0):
         if ip[0] not in ip_list:
             ip_list.append(ip[0])
             logger.info("conn: scan_robot_ip_list, ip_list:{0}".format(ip_list))
+            print("find robot sn:{0}, ip:{1}".format(str(data[:-1].decode(encoding='utf-8')), ip[0]))
     return ip_list
 
 
@@ -283,7 +284,7 @@ class SdkConnection(BaseConnection):
             if config.LOCAL_IP_STR:
                 proto._ip = config.LOCAL_IP_STR
             else:
-                proto._ip = get_local_ip()
+                proto._ip = '0.0.0.0'
             logger.info("Robot: request_connection, ap get local ip:{0}".format(proto._ip))
             proto._port = random.randint(config.ROBOT_SDK_PORT_MIN, config.ROBOT_SDK_PORT_MAX)
             proxy_addr = (config.ROBOT_DEFAULT_WIFI_ADDR[0], config.ROBOT_PROXY_PORT)
@@ -291,7 +292,7 @@ class SdkConnection(BaseConnection):
             local_addr = (proto._ip, proto._port)
         elif conn_type is CONNECTION_WIFI_STA:
             proto._connection = 1
-            local_ip = get_local_ip()
+            local_ip = '0.0.0.0'
             if config.LOCAL_IP_STR:
                 local_ip = config.LOCAL_IP_STR
             proto.ip = local_ip

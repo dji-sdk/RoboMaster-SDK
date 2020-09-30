@@ -1,11 +1,11 @@
 # -*-coding:utf-8-*-
 # Copyright (c) 2020 DJI.
 #
-# Licensed under The 3-Clause BSD License (the "License");
+# Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License in the file LICENSE.txt or at
 #
-#     https://opensource.org/licenses/BSD-3-Clause
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,6 @@
 # limitations under the License.
 
 from multi_robomaster import multi_robot
-
 
 def group_task(robot_group):
     x = 0.3
@@ -47,7 +46,7 @@ def group_task1(robot_group):
 
 
 if __name__ == '__main__':
-    #get robot sn by run the exmaples of /01_robot/02_get_sn.py
+    #get robot sn by run the exmaples of /15_multi_robot/multi_ep/01_scan_robot_sn.py
     robots_sn_list = ['3JKDH2T001KMP2', '3JKDH2T0013ELK']
     multi_robots = multi_robot.MultiEP()
     multi_robots.initialize()
