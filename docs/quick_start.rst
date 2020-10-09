@@ -70,6 +70,9 @@ Establish connection
 			if msg.upper() == 'Q':
 				break
 
+			# Add a ';' terminator to the end
+			msg += ';'
+
 			# Transmit the control command to the robot
 			s.send(msg.encode('utf-8'))
 

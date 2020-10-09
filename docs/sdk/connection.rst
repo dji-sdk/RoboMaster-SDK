@@ -126,6 +126,9 @@ Wi-Fi direct connection
 				if msg.upper() == 'Q':
 					break
 
+				# Add a ';' terminator to the end
+				msg += ';'
+
 				# Transmit the control command to the robot
 				s.send(msg.encode('utf-8'))
 
@@ -268,6 +271,9 @@ Wi-Fi/Wired network connection
 				# Exit the current program when the user enters Q or q
 				if msg.upper() == 'Q':
 					break
+				
+				# Add a ';' terminator to the end
+				msg += ';'
 
 				# Transmit the control command to the robot
 				s.send(msg.encode('utf-8'))
@@ -436,11 +442,14 @@ UART Connection
 			if msg.upper() == 'Q':
 				break
 
-		 	ser.write(msg)
+			# Add a ';' terminator to the end
+			msg += ';'
 
-		 	recv = ser.read()
+			ser.write(msg.encode('utf-8'))
 
-		 	print(recv)
+			recv = ser.readall()
+
+			print(recv.decode('utf-8'))
 
 		# Close the serial port
 		ser.close()
