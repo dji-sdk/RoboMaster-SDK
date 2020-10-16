@@ -27,19 +27,19 @@ def reset_task(robot_group):
     robot_group.led.set_led(led.COMP_ALL, 255, 1, 1, led.EFFECT_OFF)
     robot_group.set_group_robots_mode(multi_robot.FREE_MODE)
     robot_group.led.set_led(led.COMP_ALL, 1, 255, 1, led.EFFECT_FLASH)
-    # 目前只有步兵车，可以这样用，后期加上机械爪的工程车不能全控制云台！
+    # 目前只有步兵车，可以这样用
     robot_group.gimbal.moveto(0, 0, 180, 180).wait_for_completed()
     robot_group.led.set_led(led.COMP_ALL, 255, 1, 1, led.EFFECT_OFF)
 
 
 def ep_arm_initial_pos(robot_group):
-    """ep_arm 工程车初始云台位置"""
+    """ep_arm 初始云台位置"""
     robot_group.gimbal.moveto(0, 0, 180, 180).wait_for_completed()
     robot_group.gimbal.moveto(-20, 0, 100, 100).wait_for_completed()
 
 
 def ep_gimbal_initial_pos(robot_group):
-    """ep_gimbal 步兵车初始云台位置"""
+    """ep_gimbal 初始云台位置"""
     robot_group.gimbal.moveto(0, 0, 180, 180).wait_for_completed()
     robot_group.gimbal.moveto(-20, 0, 100, 100).wait_for_completed()
 
@@ -197,7 +197,6 @@ def nod_action(robot_group):
 
 
 if __name__ == '__main__':
-    # 如果本地IP 自动获取不正确，手动指定本地IP地址
     # robomaster.config.LOCAL_IP_STR = "192.168.1.111"
     # get robot sn by run the exmaples of /15_multi_robot/multi_ep/01_scan_robot_sn.py
     robots_sn_list = ['3JKDH3B00138T0', '3JKDH3B001628K', '3JKDH3B0016UMV',
@@ -205,19 +204,17 @@ if __name__ == '__main__':
 
     multi_robots = multi_robot.MultiEP()
     multi_robots.initialize()
-
+    # 本例程只支持带云台的EP车，不支持夹爪的EP车, 如有夹爪请自行修改代码
     number = multi_robots.number_id_by_sn([0, robots_sn_list[0]], [1, robots_sn_list[1]], [2, robots_sn_list[2]],
                                           [3, robots_sn_list[3]], [4, robots_sn_list[4]], [5, robots_sn_list[5]])
     print("The number of robot is: {0}".format(number))
     robot_group_all = multi_robots.build_group([0, 1, 2, 3, 4, 5])
     robot_group_ep_gimbal = multi_robots.build_group([0, 2, 4])
     robot_group_ep_arm = multi_robots.build_group([1, 3, 5])
-    robot_group_first_line = multi_robots.build_group([0, 1])
-    robot_group_second_line = multi_robots.build_group([2, 3])
-    robot_group_third_line = multi_robots.build_group([4, 5])
+
     ep_gimbal_leader = multi_robots.build_group([2])
     ep_arm_leader = multi_robots.build_group([3])
-    # 初始摆放，步兵车头向左，工程车头向右
+    # 初始摆放，云台向左，云台向右，依次摆放
     multi_robots.run([robot_group_all, reset_task])
     multi_robots.run([robot_group_ep_gimbal, ep_gimbal_initial_pos], [robot_group_ep_arm, ep_arm_initial_pos])
     # 依次点亮灯，抬起云台
@@ -234,9 +231,9 @@ if __name__ == '__main__':
     multi_robots.run([robot_group_ep_gimbal, rotate_left], [robot_group_ep_arm, rotate_right])
     # 步兵leader 舞
     multi_robots.run([ep_gimbal_leader, rotate_dance])
-    # 工程兵点头
+    # 点头
     multi_robots.run([robot_group_ep_arm, nod_action])
-    # 工程兵leader 舞
+    # leader 舞
     multi_robots.run([ep_arm_leader, rotate_dance])
     # 步兵点头
     multi_robots.run([robot_group_ep_gimbal, nod_action])
