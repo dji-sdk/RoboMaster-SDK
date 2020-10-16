@@ -87,7 +87,7 @@ c. 安装完成后按 ``win+r``，在弹出窗口中输入 ``cmd`` 打开命令�
 
 2. **EP小车**
 
-- 数量：6台
+- 数量：6台EP步兵车
 
 .. tip:: 如果没有6台EP小车，2台EP小车也可以，后面的示例代码请更换参考 :file:`/examples/15_muti_robot/multi_ep/02_two_ep_demo.py`
 
