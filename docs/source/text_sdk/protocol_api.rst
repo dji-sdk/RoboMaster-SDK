@@ -1122,7 +1122,6 @@ OUT: **game msg push <data>**
             - mouse_x : 鼠标移动距离, 范围-100 ~ 100
             - mouse_y : 鼠标移动距离, 范围-100 ~ 100
             - seq: 序列号 0~255
-            - mouse_right: 鼠标右击次数序列号 0~255
             - key_num: 识别到的按键数, 最多识别三个按键
             - key1: 键值
 
