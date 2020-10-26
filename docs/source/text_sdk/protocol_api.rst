@@ -1117,11 +1117,14 @@ OUT: **game msg push <data>**
         - 当用户使能赛事数据推送后，机器人会以固定的频率向用户推送相应信息，数据为字符串
     - 参数
         - *data* ：订阅的属性数据
-            - 内容为 [cmd_id, len, mouse_x, mouse_y, mouse_left, mouse_right, key_num, key_1, key2, ....]
-            - mouse_x : -100 ~ 100
-            - mouse_y : -100 ~ 100
-            - mouse_left: 鼠标左击次数序列号 0~255
+            - 内容为 [cmd_id, len, mouse_press, mouse_x, mouse_y, seq, key_num, key_1, key2, ....]
+            - mouse_press: 1为鼠标右键, 2为鼠标左键, 4为鼠标中间
+            - mouse_x : 鼠标移动距离, 范围-100 ~ 100
+            - mouse_y : 鼠标移动距离, 范围-100 ~ 100
+            - seq: 序列号 0~255
             - mouse_right: 鼠标右击次数序列号 0~255
+            - key_num: 识别到的按键数, 最多识别三个按键
+            - key1: 键值
 
     - 示例
-        - OUT: *game msg push [0, 6, 0, 0, 0, 45, 1, 199];* : cmd_id为0, 数据长度为6, 识别到鼠标右击, 按键w按下
+        - OUT: *game msg push [0, 6, 1, 0, 0, 255, 1, 199];* : cmd_id为0, 数据长度为6, 识别到鼠标右击, 按键w按下, 包序号255
