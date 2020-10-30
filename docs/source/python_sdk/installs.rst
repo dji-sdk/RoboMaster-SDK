@@ -76,7 +76,7 @@ Python 环境安装
 
     pip install --upgrade robomaster
 
-
+.. tip:: 树莓派下的python sdk安装教程可参考 `sdk install on Raspberry Pi.7z<https://github.com/dji-sdk/robomaster-sdk>`_
 
 安装 SDK 到 macOS X平台
 ---------------------------
