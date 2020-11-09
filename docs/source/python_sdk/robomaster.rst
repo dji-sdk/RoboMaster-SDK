@@ -48,8 +48,13 @@ robomaster.blaster
 robomaster.camera
 ------------------------
 
-.. automodule:: robomaster.camera
-   :members: TelloCamera, EPCamera
+.. automodule:: robomaster.camera.TelloCamera
+   :members:
+   :show-inheritance:
+   :inherited-members:
+
+.. automodule:: robomaster.camera.EPCamera
+   :members:
    :show-inheritance:
    :inherited-members:
 
@@ -105,9 +110,15 @@ robomaster.led
 robomaster.robot
 -----------------------
 
-.. automodule:: robomaster.robot
-   :members: Drone, Robot
-   :no-undoc-members:
+.. automodule:: robomaster.robot.Drone
+   :members:
+   :show-inheritance:
+   :inherited-members:
+
+.. automodule:: robomaster.robot.Robot
+   :members:
+   :show-inheritance:
+   :inherited-members:
 
 robomaster.robotic\_arm
 ------------------------------
