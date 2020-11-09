@@ -49,7 +49,7 @@ robomaster.camera
 ------------------------
 
 .. automodule:: robomaster.camera
-   :members: TelloCamera, EPCamera
+   :members:
    :show-inheritance:
    :inherited-members:
 
@@ -106,7 +106,7 @@ robomaster.robot
 -----------------------
 
 .. automodule:: robomaster.robot
-   :members: Drone, Robot
+   :members:
    :show-inheritance:
    :exclude-members:
    :inherited-members:
