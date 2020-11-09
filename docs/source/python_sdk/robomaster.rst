@@ -107,9 +107,7 @@ robomaster.robot
 
 .. automodule:: robomaster.robot
    :members: Robot, Drone
-   :show-inheritance:
-   :exclude-members:
-   :inherited-members:
+   :no-undoc-members:
 
 robomaster.robotic\_arm
 ------------------------------
