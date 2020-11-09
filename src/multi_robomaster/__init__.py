@@ -1,8 +1,8 @@
 import sys
 import time
 
-if sys.version_info < (3, 6, 6):
-    sys.exit('RoboMaster Sdk requires Python 3.6.6 or later')
+if sys.version_info < (3, 6, 5):
+    sys.exit('RoboMaster Sdk requires Python 3.6.5 or later')
 
 import logging
 

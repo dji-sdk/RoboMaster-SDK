@@ -89,7 +89,10 @@ class Client(object):
 
     @property
     def remote_addr(self):
-        return self._conn.target_addr
+        try:
+            return self._conn.target_addr
+        except Exception:
+            raise print('Robot: Can not connect to robot, check connection please.')
 
     def add_handler(self, obj, name, f):
         self._dispatcher.add_handler(obj, name, f)

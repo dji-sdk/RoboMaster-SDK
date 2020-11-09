@@ -299,6 +299,32 @@ class MultiRmModule(MultiModule):
         """
         return self.execute_command('set_led', *args, **kw)
 
+    """Only for gripper"""
+
+    def close(self, *args, **kw):
+        """gripper
+
+        :param args:
+        :return:
+        """
+        return self.execute_command('close', *args, **kw)
+
+    def open(self, *args, **kw):
+        """gripper
+
+        :param args:
+        :return:
+        """
+        return self.execute_command('open', *args, **kw)
+
+    def pause(self):
+        """gripper
+
+        :param args:
+        :return:
+        """
+        return self.execute_command('pause')
+
 
 class TelloAction(object):
 

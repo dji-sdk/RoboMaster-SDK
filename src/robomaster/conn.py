@@ -130,7 +130,7 @@ def scan_robot_ip_list(timeout=3.0):
         except Exception as e:
             logger.warning("scan_robot_ip_list: socket recv, {0}".format(e))
             continue
-        logger.info("conn: scan_robot_ip, data:{0}, ip:{1}".format(data.decode(encoding='utf-8'), ip))
+        logger.info("conn: scan_robot_ip, data:{0}, ip:{1}".format(data[:-1].decode(encoding='utf-8'), ip))
         if ip[0] not in ip_list:
             ip_list.append(ip[0])
             logger.info("conn: scan_robot_ip_list, ip_list:{0}".format(ip_list))

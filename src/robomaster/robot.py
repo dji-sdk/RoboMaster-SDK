@@ -16,6 +16,11 @@
 
 import os
 import threading
+import netifaces
+import socket
+import netaddr
+import time
+from netaddr import IPNetwork
 from . import protocol
 from . import logger
 from . import action
@@ -346,8 +351,12 @@ class Drone(RobotBase):
     """ 教育系列无人机 """
 
     def __init__(self, cli=None):
+        self._robot_host_list = []
         self._conf = config.te_conf
+        self.local_ip = None
+        self.local_port = self._conf.default_sdk_addr[1]
         self.status_sub = None
+        self._sock = None
         super().__init__(cli)
 
     @property
@@ -405,19 +414,155 @@ class Drone(RobotBase):
         self._modules[_sensor.__class__.__name__] = _sensor
         self._modules[_led.__class__.__name__] = _led
 
-    def initialize(self):
+    def get_subnets(self):
+        """
+        Look through the machine's internet connection and
+        returns subnet addresses and server ip
+        :return: list[str]: subnets
+                 list[str]: addr_list
+        """
+        subnets = []
+        ifaces = netifaces.interfaces()
+        addr_list = []
+        for myiface in ifaces:
+            addrs = netifaces.ifaddresses(myiface)
+
+            if socket.AF_INET not in addrs:
+                continue
+            # Get ipv4 stuff
+            ipinfo = addrs[socket.AF_INET][0]
+            address = ipinfo['addr']
+            netmask = ipinfo['netmask']
+
+            # limit range of search. This will work for router subnets
+            if netmask != '255.255.255.0':
+                continue
+
+            # Create ip object and get
+            cidr = netaddr.IPNetwork('%s/%s' % (address, netmask))
+            network = cidr.network
+            subnets.append((network, netmask))
+            addr_list.append(address)
+        return subnets, addr_list
+
+    def _scan_host(self, timeout=10):
+        """Find avaliable ip list in server's subnets
+
+        :param num: Number of Tello this method is expected to find
+        :return: None
+        """
+        logger.info('[Start_Searching]Searching for available Tello...\n')
+
+        subnets, address = self.get_subnets()
+        possible_addr = []
+
+        for subnet, netmask in subnets:
+            for ip in IPNetwork('%s/%s' % (subnet, netmask)):
+                # skip local and broadcast
+                if str(ip).split('.')[3] == '0' or str(ip).split('.')[3] == '255':
+                    continue
+                possible_addr.append(str(ip))
+        last_time = time.time()
+        while len(self._robot_host_list) < 10:
+            # delete already fond Tello ip
+            for tello_host in self._robot_host_list:
+                if tello_host[0] in possible_addr:
+                    possible_addr.remove(tello_host[0])
+            # skip server itself
+            for ip in possible_addr:
+                if ip in address:
+                    continue
+                self._sock.sendto(b'command', (ip, 8889))
+            if len(self._robot_host_list) >= 1:
+                break
+            if timeout < time.time() - last_time:
+                raise logger.error("Drone: can not find the drone robot")
+        return self._robot_host_list
+
+    def scan_drone_robot(self):
+        """ Automatic scanning of robots in the network
+
+        :param num:
+        :return:
+        """
+        receive_thread = threading.Thread(target=self._scan_receive_task, daemon=True)
+        receive_thread.start()
+        robot_host_list = self._scan_host()
+        receive_thread.join()
+        return robot_host_list
+
+    def _scan_receive_task(self):
+        """Listen to responses from the Tello when scan the devices.
+
+        :param:num:
+        """
+        while len(self._robot_host_list) < 1:
+            try:
+                resp, ip = self._sock.recvfrom(1024)
+                logger.info("FoundTello: from ip {1}_receive_task, recv msg: {0}".format(resp, ip))
+                ip = ''.join(str(ip[0]))
+                if resp.upper() == b'OK' and ip not in self._robot_host_list:
+                    self._robot_host_list.append((ip, self.local_port))
+                    logger.info('FoundTello: Found Tello.The Tello ip is:%s\n' % ip)
+            except socket.error as exc:
+                logger.error("[Exception_Error]Caught exception socket.error : {0}\n".format(exc))
+        self.client_recieve_thread_flag = True
+        logger.info("FoundTello: has finished, _scan_receive_task quit!")
+
+    def start(self):
+        try:
+            if config.LOCAL_IP_STR:
+                self.local_ip = config.LOCAL_IP_STR
+            else:
+                self.local_ip = conn.get_local_ip()
+            local_addr = (self.local_ip, self.local_port)
+            self._sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # socket for sending cmd
+            self._sock.bind(local_addr)
+        except Exception as e:
+            logger.warning("udpConnection: create, host_addr:{0}, exception:{1}".format(self.local_ip, e))
+            raise
+
+    def search_stop(self):
+        self._sock.close()
+
+    def initialize(self, conn_type=config.DEFAULT_CONN_TYPE):
         if not self._client:
             default_sdk_addr = self._conf.default_sdk_addr
             video_stream_addr = self._conf.video_stream_addr
-            if config.LOCAL_IP_STR:
-                self._conf.default_sdk_addr = (config.LOCAL_IP_STR, default_sdk_addr[1])
-                self._conf.video_stream_addr = (config.LOCAL_IP_STR, video_stream_addr[1])
+            if conn_type == 'ap':
+                if config.LOCAL_IP_STR:
+                    self._conf.default_sdk_addr = (config.LOCAL_IP_STR, default_sdk_addr[1])
+                    self._conf.video_stream_addr = (config.LOCAL_IP_STR, video_stream_addr[1])
+                else:
+                    local_ip = conn.get_local_ip()
+                    self._conf.default_sdk_addr = (local_ip, default_sdk_addr[1])
+                    self._conf.video_stream_addr = (local_ip, video_stream_addr[1])
+                logger.info("Drone: initialize, the connection uses local addr {0}".format(self._conf.default_sdk_addr))
+                self._client = client.TextClient(self._conf)
+            elif conn_type == 'sta':
+                if config.LOCAL_IP_STR:
+                    self._conf.default_sdk_addr = (config.LOCAL_IP_STR, default_sdk_addr[1])
+                    self._conf.video_stream_addr = (config.LOCAL_IP_STR, video_stream_addr[1])
+                else:
+                    local_ip = conn.get_local_ip()
+                    self._conf.default_sdk_addr = (local_ip, default_sdk_addr[1])
+                    self._conf.video_stream_addr = (local_ip, video_stream_addr[1])
+                if config.ROBOT_IP_STR:
+                    self._conf.default_robot_addr = (config.ROBOT_IP_STR, self._conf.default_cmd_addr[1])
+                    logger.info(
+                        "Drone: initialize, the connection uses local addr {0}".format(self._conf.default_sdk_addr))
+                    self._client = client.TextClient(self._conf)
+                else:
+                    self.start()
+                    robot_addr = self.scan_drone_robot()
+                    self.search_stop()
+                    self._conf.default_robot_addr = (str(robot_addr[0][0]), self._conf.default_cmd_addr[1])
+                    logger.info(
+                        "Drone: initialize, the  connection uses local addr {0}".format(self._conf.default_sdk_addr))
+                    self._client = client.TextClient(self._conf)
             else:
-                local_ip = conn.get_local_ip()
-                self._conf.default_sdk_addr = (local_ip, default_sdk_addr[1])
-                self._conf.video_stream_addr = (local_ip, video_stream_addr[1])
-            logger.info("Drone: initialize, the  connection uses local addr {0}".format(self._conf.default_sdk_addr))
-            self._client = client.TextClient(self._conf)
+                logger.error("Drone: unknown connect type {0}".format(conn_type))
+
         try:
             self._client.start()
         except Exception as e:
@@ -510,6 +655,29 @@ class Drone(RobotBase):
                 logger.warning("Drone: get_wifi_version failed.")
         except Exception as e:
             logger.warning("Drone: get_wifi_version, send_sync_msg exception {0}".format(str(e)))
+            return None
+
+    def get_ssid(self):
+        """ 获取SSID名称
+
+        :return: string: ssid名称
+        """
+        cmd = "ssid?"
+        proto = protocol.TextProtoDrone()
+        proto.text_cmd = cmd
+        msg = protocol.TextMsg(proto)
+        try:
+            resp_msg = self._client.send_sync_msg(msg)
+            if resp_msg:
+                proto = resp_msg.get_proto()
+                if proto:
+                    return proto.resp
+                else:
+                    return None
+            else:
+                logger.warning("Drone: get_ssid failed.")
+        except Exception as e:
+            logger.warning("Drone: get_ssid, send_sync_msg exception {0}".format(str(e)))
             return None
 
     def get_drone_version(self):
@@ -1142,6 +1310,7 @@ class Robot(RobotBase):
         self.reset()
 
         self._ftp.connect(self.ip)
+
         # start heart beat timer
         self._running = True
         self._start_heart_beat_timer()
@@ -1179,6 +1348,20 @@ class Robot(RobotBase):
         self.set_robot_mode(mode=FREE)
         self.vision.reset()
 
+    def reset_robot_mode(self):
+        proto = protocol.ProtoSetRobotMode()
+        proto._mode = 0
+        msg = protocol.Msg(self._client.hostbyte, protocol.host2byte(9, 0), proto)
+
+        try:
+            resp_msg = self._client.send_sync_msg(msg)
+            if resp_msg:
+                return True
+            return False
+        except Exception as e:
+            logger.warning("Robot: set_robot_mode, send_sync_msg exception {0}".format(str(e)))
+            return False
+
     def set_robot_mode(self, mode=GIMBAL_LEAD):
         """ 设置机器人工作模式
 
@@ -1190,8 +1373,10 @@ class Robot(RobotBase):
             proto._mode = 0
         elif mode == GIMBAL_LEAD:
             proto._mode = 1
+            self.reset_robot_mode()
         elif mode == CHASSIS_LEAD:
             proto._mode = 2
+            self.reset_robot_mode()
         else:
             logger.warning("Robot: set_robot_mode, unsupported mode = {0}".format(mode))
         msg = protocol.Msg(self._client.hostbyte, protocol.host2byte(9, 0), proto)

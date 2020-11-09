@@ -1,3 +1,0 @@
-libmedia_codec
-multi_robomaster
-robomaster

@@ -59,7 +59,7 @@ class Config:
         return self._cmd_addr
 
     @default_robot_addr.setter
-    def default_cmd_addr(self, val):
+    def default_robot_addr(self, val):
         self._cmd_addr = val
 
     @property
@@ -69,6 +69,14 @@ class Config:
     @cmd_proto.setter
     def cmd_proto(self, val):
         self._cmd_proto = val
+
+    @property
+    def default_cmd_addr(self):
+        return self._cmd_addr
+
+    @default_cmd_addr.setter
+    def default_cmd_addr(self, val):
+        self._cmd_addr = val
 
     @property
     def default_sdk_addr(self):

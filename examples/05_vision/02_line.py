@@ -43,7 +43,9 @@ line = []
 def on_detect_line(line_info):
     number = len(line_info)
     line.clear()
-    for i in range(0, number):
+    line_type = line_info[0]
+    print('line_type', line_type)
+    for i in range(1, number):
         x, y, ceta, c = line_info[i]
         line.append(PointInfo(x, y, ceta, c))
 

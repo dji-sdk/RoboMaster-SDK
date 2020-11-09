@@ -1597,8 +1597,13 @@ class ProtoVisionDetectInfo(ProtoData):
                 t = 5
                 self._rect_info.append([round(x, t), round(y, t), round(w, t), round(h, t), info])
         elif self._type == 4:  # line
+            if count > 0:
+                x, y, theta, C, info = struct.unpack_from("<ffffI", buf, 9)
+                self._rect_info.append(info)
+            else:
+                self._rect_info.append(0)
             for i in range(0, count):
-                x, y, theta, C, _ = struct.unpack_from("<ffffI", buf, 9 + 20 * i)
+                x, y, theta, C, info = struct.unpack_from("<ffffI", buf, 9 + 20 * i)
                 t = 7
                 self._rect_info.append([round(x, t), round(y, t), round(theta, t), round(C, t)])
         elif self._type == 5:  # marker

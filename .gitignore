@@ -1,5 +1,5 @@
-_build
+build
+dist
+
+src/robomaster.egg-info
 __pycache__
-*pyc
-!.gitignore
-.idea

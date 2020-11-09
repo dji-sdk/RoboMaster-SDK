@@ -338,3 +338,22 @@ class TelloStatus(object):
                     logger.warning("reply false: {}".format(data))
             else:
                 logger.debug("DRONE reply：{}".format(data))
+
+
+class TelloThread(threading.Thread):
+
+    def __init__(self, target, *args, **kwargs):
+        threading.Thread.__init__(self)
+        self.args = args
+        self.kw = kwargs
+        self.result = None
+        self.target = target
+
+    def run(self):
+        self.result = self.target(*self.args, **self.kw)
+
+    def get_result(self):
+        try:
+            return self.result
+        except Exception:
+            return None
