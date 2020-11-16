@@ -18,7 +18,7 @@ RoboMaster SDK 安装
 安装必要的VC库环境
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-下载（`下载地址：GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_  `备用地址：Gitee RoboMaster SDK repository <https://gitee.com/xitinglin/RoboMaster-SDK>`_）安装VC库的exe可执行文件：
+下载（`下载地址：GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_ , `备用地址：Gitee RoboMaster SDK repository <https://gitee.com/xitinglin/RoboMaster-SDK>`_）安装VC库的exe可执行文件：
 
 .. image:: ./../images/vc_exe.png
 
