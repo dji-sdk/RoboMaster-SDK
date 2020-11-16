@@ -6,4 +6,4 @@ Learn more about the RoboMaster Education Robot: https://www.dji.com/robomaster-
 
 RoboMaster Developer Guide: https://robomaster-dev.rtfd.io/
 
-gitee link for RoboMaster SDK download: https://gitee.com/xitinglin/RoboMaster-SDK
+Gitee link for RoboMaster SDK download: https://gitee.com/xitinglin/RoboMaster-SDK
