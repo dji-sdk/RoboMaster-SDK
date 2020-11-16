@@ -11,7 +11,7 @@ Demo的环境要求及物料清单
 
 1. **编程环境**
 
-（1）下载RoboMaster-SDK压缩包，下载链接：`RoboMaster-SDK压缩包 <https://github.com/dji-sdk/RoboMaster-SDK/>`_ ，下载步骤：
+（1）下载RoboMaster-SDK压缩包，下载链接：`RoboMaster-SDK压缩包 <https://github.com/dji-sdk/RoboMaster-SDK/>`_ (备用下载链接：`RoboMaster-SDK压缩包 <https://gitee.com/xitinglin/RoboMaster-SDK>`_)，下载步骤：
 
 * 点击 ``Code`` ,点击 ``Download ZIP`` 下载压缩包。
 
