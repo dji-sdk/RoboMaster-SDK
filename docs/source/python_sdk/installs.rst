@@ -26,6 +26,17 @@ RoboMaster SDK 安装
 
 	.. image:: ./../images/libmedia_err.png
 
+安装VC build tools
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+下载（`下载地址：GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_ , `备用地址：Gitee RoboMaster SDK repository <https://gitee.com/xitinglin/RoboMaster-SDK>`_）安装VC build tools的exe可执行文件：
+
+.. image:: ./../images/vs_build_tool.png
+
+.. warning:: 不安装VC build tools，安装SDK,会报以下错误：
+
+	.. image:: ./../images/neti_err.jpg
+
 安装robomaster python sdk
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
