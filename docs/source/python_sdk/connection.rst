@@ -5,6 +5,11 @@
 RoboMaster SDK 和机器人建立连接
 ###############################
 
+EP固件升级
+************
+
+请通过RoboMaster App查看EP固件，确保EP固件版本在01.01.0500及其以上版本，如果不是请通过RoboMaster APP进行升级，不然会影响到RoboMaster SDK的使用。
+
 .. _EpConn:
 
 EP连接方式
