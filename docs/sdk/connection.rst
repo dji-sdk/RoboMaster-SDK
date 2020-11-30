@@ -125,6 +125,9 @@ Wi-Fi 直連
 				# 當用戶輸入 Q 或 q 時，退出當前程式
 				if msg.upper() == 'Q':
 					break
+				
+				# 添加结束符
+				msg += ';'
 
 				# 發送控制命令給機器人
 				s.send(msg.encode('utf-8'))
@@ -270,6 +273,9 @@ Wi-Fi/有線網路組網連接
 				# 當用戶輸入 Q 或 q 時，退出當前程式
 				if msg.upper() == 'Q':
 					break
+
+				# 添加结束符
+				msg += ';'
 
 				# 發送控制命令給機器人
 				s.send(msg.encode('utf-8'))
@@ -437,6 +443,9 @@ UART 連接
 			# 當用戶輸入 Q 或 q 時，退出當前程式
 			if msg.upper() == 'Q':
 				break
+			
+			# 添加结束符
+			msg += ';'
 
 		 	ser.write(msg)
 
