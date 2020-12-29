@@ -26,7 +26,7 @@ def sub_atti_info_handler(attitute_info):
 
 def sub_imu_info_handler(imu_info):
     vgx, vgy, vgz, agx, agy, agz = imu_info
-    print("Drone imu: vgx {0}, vgy {1}, vgz {1}, agx {2}, agy {3}, agz {4}".format(vgx, vgy, vgz, agx, agy, agz))
+    print("Drone imu: vgx {0}, vgy {1}, vgz {2}, agx {3}, agy {4}, agz {5}".format(vgx, vgy, vgz, agx, agy, agz))
 
 
 if __name__ == '__main__':
