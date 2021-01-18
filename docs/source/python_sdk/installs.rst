@@ -43,6 +43,10 @@ RoboMaster SDK 安装
 安装RoboMaster SDK，点开开始菜单，在搜索框中输入 ``cmd`` ，在搜索结果中，对着命令提示符程序，单击鼠标右键，菜单中点击选择 ``以管理员身份运行`` ,并输入以下指令::
 
     pip install robomaster
+   
+如果网络较差，多次都安装失败，可以尝试::
+
+    pip install -i https://pypi.tuna.tsinghua.edu.cn/simple robomaster
 
 .. tip:: 如果出现下列情况，请参考以下链接进行python环境安装：:doc:`python编程环境安装 <./../code_env_setup>`
 
