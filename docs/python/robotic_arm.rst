@@ -28,7 +28,7 @@
 
     :示例: ``robotic_arm_ctrl.moveto(40, 50, True)``
 
-    :示例說明: 設定機械臂移動到（x=40mm，y=50mm）的絕對座標，等待執行完成
+    :示例說明: 設定機械臂移動到（x=40mm, y=50mm）的絕對座標，等待執行完成
 
 .. function:: robotic_arm_ctrl.get_position()
 
