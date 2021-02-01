@@ -52,7 +52,7 @@ This website has four parts, as described below:
 - :doc:`Plaintext SDK Description<./text_sdk/intro>`
 	After using a third-party platform to establish a connection with RoboMaster EP, users can perform more complex and interesting operations on the EP robot through the plaintext SDK. This section details the functions, usage, and related protocols of the plaintext SDK.
 
-- :doc:`Python Programming Description<./python/intro>`
+- :doc:`Python Programming Description<./python/python_api>`
 	This section helps users develop the newly added functions and modules of EP in the built-in Python programming environment of the official RoboMaster EP app in order to implement more fun applications.
 
 - :doc:`Version Description<./version>`
