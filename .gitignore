@@ -3,5 +3,3 @@ dist
 
 src/robomaster.egg-info
 __pycache__
-*pyc
-!.gitignore
