@@ -59,7 +59,7 @@
     :caption: Python 编程说明
     :numbered:
 
-    python/intro.rst
+    python/python_api.rst
     python/feature.rst
     python/apis.rst
 

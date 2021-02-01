@@ -52,7 +52,7 @@ RoboMaster EP 作为一款教育机器人，具有强大的扩展性和可编程
 - :doc:`明文 SDK 说明 <./text_sdk/intro>`
 	用户使用第三方平台跟 RoboMaster EP 建立连接后，可通过明文 SDK 对 EP 机器人进行更复杂、更有趣的操作。本章将详细说明明文 SDK 的功能、用法和相关协议。
 
-- :doc:`Python 编程说明 <./python/intro>`
+- :doc:`Python 编程说明 <./python/python_api>`
 	本章将指导用户通过 RoboMaster EP 官方 App 内置的 python 编程环境对 EP 上新增的功能和模块进行编程，解锁更多玩法。
 
 - :doc:`版本说明 <./version>`
