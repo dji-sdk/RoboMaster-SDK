@@ -408,12 +408,12 @@ class Chassis(module.Module):
     def set_pwm_value(self, pwm1=None, pwm2=None, pwm3=None, pwm4=None, pwm5=None, pwm6=None):
         """ 设置PWM输出占空比
 
-        :param pwm1: int:[0,100]，pwm输出占空比，单位%
-        :param pwm2: int:[0,100]，pwm输出占空比，单位%
-        :param pwm3: int:[0,100]，pwm输出占空比，单位%
-        :param pwm4: int:[0,100]，pwm输出占空比，单位%
-        :param pwm5: int:[0,100]，pwm输出占空比，单位%
-        :param pwm6: int:[0,100]，pwm输出占空比，单位%
+        :param pwm1: int:[0,1000]，pwm输出占空比，单位‰
+        :param pwm2: int:[0,1000]，pwm输出占空比，单位‰
+        :param pwm3: int:[0,1000]，pwm输出占空比，单位‰
+        :param pwm4: int:[0,1000]，pwm输出占空比，单位‰
+        :param pwm5: int:[0,1000]，pwm输出占空比，单位‰
+        :param pwm6: int:[0,1000]，pwm输出占空比，单位‰
         """
         proto = protocol.ProtoChassisPwmPercent()
         proto._mask = 0
