@@ -19,7 +19,7 @@ from . import protocol
 from . import dds
 from . import logger
 
-__all__ = ['DistanceSensor']
+__all__ = ['DistanceSensor','SensorAdaptor', 'TelloDistanceSensor']
 
 
 class TofSubject(dds.Subject):
