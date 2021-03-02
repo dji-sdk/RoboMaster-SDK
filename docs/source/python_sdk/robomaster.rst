@@ -98,8 +98,9 @@ robomaster.led
 ---------------------
 
 .. automodule:: robomaster.led
-   :members:
+   :members: Led, TelloLed
    :show-inheritance:
+   :exclude-members:
    :inherited-members:
 
 robomaster.robot
