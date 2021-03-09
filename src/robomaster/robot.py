@@ -1145,7 +1145,7 @@ class Robot(RobotBase):
 
     @property
     def ip(self):
-        return self.client.remote_addr[0]
+        return self.client.remote_addr[0] if self.client.remote_addr else None
 
     @property
     def conn_type(self):
@@ -1298,7 +1298,7 @@ class Robot(RobotBase):
             self._client.start()
         except Exception as e:
             logger.error("Robot: Connection Create Failed.")
-            raise e
+            return False
 
         self._action_dispatcher = action.ActionDispatcher(self.client)
         self._action_dispatcher.initialize()
