@@ -171,8 +171,7 @@ Currently, the main education-series drones are Tello EDU and Tello Talent. The 
    :linenos:
    :lines: 17-
 
-- Wait several seconds for the TelloEDU device to restart automatically and the extended module of TelloTalent to restart automatically. Set the connection method switch of the extended module to the networking mode.
-  Then, the device will automatically connect to the LAN of the specified router.
+-  Set the connection method switch of the extended module to the networking mode.Then, the device will automatically connect to the LAN of the specified router.
 
 - Connect the device running the SDK to the same LAN so that the SDK and the device are on the same network.
 
