@@ -15,7 +15,7 @@ RoboMaster SDK 安装
 
 .. tip:: 在使用python sdk前，需要确保编程平台端安装对应的python环境，建议参考以下链接进行安装或重新安装： :doc:`python编程环境安装 <./../code_env_setup>`
 
-安装必要的VC库环境
+安装VC库环境（可选）
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 下载（`下载地址：GitHub RoboMaster SDK repository <https://github.com/dji-sdk/robomaster-sdk>`_ , `备用地址：Gitee RoboMaster SDK repository <https://gitee.com/xitinglin/RoboMaster-SDK>`_）安装VC库的exe可执行文件：
