@@ -22,7 +22,7 @@ RoboMaster SDK 安装
 
 .. image:: ./../images/vc_exe.png
 
-.. warning:: 不安装VC库，使用SDK，会引起以下问题:
+.. warning:: 如果使用SDK，出现以下问题，请执行此安装:
 
 	.. image:: ./../images/libmedia_err.png
 
