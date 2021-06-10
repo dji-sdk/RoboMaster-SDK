@@ -91,7 +91,7 @@ OUT: Opus 编码实时音频流数据，采样率为 48000 bps，帧大小为 96
 
 .. tip:: Decoder
 
-    接收端音视频解码示例代码请参见 `Stream Decoder <https://github.com/dji-sdk/RoboMaster-SDK/tree/master/sample_code/RoboMasterEP/stream/>`_
+    接收端音视频解码示例代码请参见 `Stream Decoder <https://github.com/dji-sdk/RoboMaster-SDK/tree/master/examples/plaintext_sample_code/RoboMasterEP/stream/>`_
 
 
 .. note:: IN/OUT
