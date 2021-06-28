@@ -6,7 +6,7 @@ Servo
 
     :description: Obtains the rotation angle of the servo
 
-    :param uint8 servo_id: The number of the servo, whose range is [1:4]
+    :param uint8 servo_id: The number of the servo, whose range is [1:3]
 
     :return: The angle of the servo, with an accuracy of 0.1°
     :rtype: int32
@@ -19,7 +19,7 @@ Servo
 
     :description: Set the rotation angle of the servo
 
-    :param uint8 servo_id: The number of the servo, whose range is [1:4]
+    :param uint8 servo_id: The number of the servo, whose range is [1:3]
     :param int32 angle: The rotation angle, with an accuracy of 0.1°. A positive number indicates clockwise rotation, and a negative number indicates counterclockwise rotation.
     :param bool wait_for_complete: Whether to wait for execution to be completed. The default value is True.
 
@@ -33,7 +33,7 @@ Servo
 
     :description: Sets the servo back to normal
 
-    :param uint8 servo_id: The number of the servo, whose range is [1:4]
+    :param uint8 servo_id: The number of the servo, whose range is [1:3]
     :param bool wait_for_complete: Whether to wait for execution to be completed. The default value is True.
 
     :return: None
@@ -46,7 +46,7 @@ Servo
 
     :description: Sets the rotation speed of the servo
 
-    :param uint8 servo_id: The number of the servo, whose range is [1:4]
+    :param uint8 servo_id: The number of the servo, whose range is [1:3]
     :param int32 speed: The rotation speed, with an accuracy of 1 °/second. A positive number indicates clockwise rotation, and a negative number indicates counterclockwise rotation.
 
     :return: None
