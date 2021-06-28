@@ -6,7 +6,7 @@
 
     :描述: 獲取舵機旋轉角度
 
-    :param uint8 servo_id: 舵機編號，範圍為[1:4]
+    :param uint8 servo_id: 舵機編號，範圍為[1:3]
 
     :return: 舵機角度，精確度為 0.1 度
     :rtype: int32
@@ -19,7 +19,7 @@
 
     :描述: 設置舵機旋轉角度
 
-    :param uint8 servo_id: 舵機編號，範圍為[1:4]
+    :param uint8 servo_id: 舵機編號，範圍為[1:3]
     :param int32 angle: 旋轉角度，精確度為 0.1 度，正數為順時針旋轉，負數為逆時針旋轉
     :param bool wait_for_complete: 是否等待執行完成，默認為 True
 
@@ -33,7 +33,7 @@
 
     :描述: 設置舵機回中
 
-    :param uint8 servo_id: 舵機編號，範圍為[1:4]
+    :param uint8 servo_id: 舵機編號，範圍為[1:3]
     :param bool wait_for_complete: 是否等待執行完成，默認為 True
 
     :return: 無
@@ -46,7 +46,7 @@
 
     :描述: 設置舵機旋轉速度
 
-    :param uint8 servo_id: 舵機編號，範圍為[1:4]
+    :param uint8 servo_id: 舵機編號，範圍為[1:3]
     :param int32 speed: 旋轉速度，精確度為 1 度/秒，正數為順時針旋轉，負數為逆時針旋轉
 
     :return: 無
