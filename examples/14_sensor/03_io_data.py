@@ -14,10 +14,22 @@
 # limitations under the License.
 
 
-SDK_VERSION_MAJOR = 0
-SDK_VERSION_MINOR = 1
-SDK_VERSION_REVISION = 1
-SDK_VERSION_BUILD = 65
+import robomaster
+from robomaster import robot
+import time
 
-__version__ = "{0:d}.{1:d}.{2:d}.{3:d}".format(SDK_VERSION_MAJOR, SDK_VERSION_MINOR,
-                                               SDK_VERSION_REVISION, SDK_VERSION_BUILD)
+
+def sub_data_handler(sub_info):
+    io_data, ad_data = sub_info
+    print("io value: {0}, ad value: {1}".format(io_data, ad_data))
+
+
+if __name__ == '__main__':
+    ep_robot = robot.Robot()
+    ep_robot.initialize(conn_type="sta")
+
+    ep_sensor = ep_robot.sensor_adaptor
+    ep_sensor.sub_adapter(freq=5, callback=sub_data_handler)
+    time.sleep(60)
+    ep_sensor.unsub_adapter()
+    ep_robot.close()
