@@ -15,9 +15,8 @@
 
 
 import cv2
-import robomaster
 from robomaster import robot
-from robomaster import vision
+import threading
 
 
 class GestureInfo:
@@ -51,30 +50,35 @@ gestures = []
 
 def on_detect_person(gesture_info):
     number = len(gesture_info)
+    value_lock.acquire()
     gestures.clear()
     for i in range(0, number):
         x, y, w, h, info = gesture_info[i]
         gestures.append(GestureInfo(x, y, w, h, info))
         print("gesture: info:{0}, x:{1}, y:{2}, w:{3}, h:{4}".format(info, x, y, w, h))
+    value_lock.release()
 
 
 if __name__ == '__main__':
     ep_robot = robot.Robot()
-    ep_robot.initialize(conn_type="sta")
+    ep_robot.initialize(conn_type="rndis")
 
     ep_vision = ep_robot.vision
     ep_camera = ep_robot.camera
 
     ep_camera.start_video_stream(False)
-    result = ep_vision.sub_detect_info("gesture", on_detect_person)
+    result = ep_vision.sub_detect_info(name="gesture", callback=on_detect_person)
 
+    value_lock = threading.Lock()
     for i in range(0, 500):
-        img = ep_camera.read_cv2_image(strategy="newest", timeout=0.5)
+        img = ep_camera.read_cv2_image(strategy="newest", timeout=1.5)
         for j in range(0, len(gestures)):
+            value_lock.acquire()
             cv2.rectangle(img, gestures[j].pt1, gestures[j].pt2, (255, 255, 255))
             cv2.putText(img, gestures[j].text, gestures[j].center, cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 3)
+            value_lock.release()
         cv2.imshow("Gestures", img)
-        cv2.waitKey(1)
+        key = cv2.waitKey(1)
     cv2.destroyAllWindows()
     result = ep_vision.unsub_detect_info("gesture")
     cv2.destroyAllWindows()

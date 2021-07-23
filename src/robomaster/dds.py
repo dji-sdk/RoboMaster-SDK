@@ -22,6 +22,7 @@ from abc import abstractmethod
 from . import logger
 from . import module
 from . import protocol
+from concurrent.futures import ThreadPoolExecutor
 
 
 SDK_FIRST_DDS_ID = 20
@@ -107,6 +108,7 @@ class Subject(metaclass=_AutoRegisterSubject):
     freq = 1
 
     def __init__(self):
+        self._task = None
         self._subject_id = 1
         self._callback = None
         self._cb_args = None
@@ -145,6 +147,7 @@ class Subscriber(module.Module):
         self._msg_queue = Queue()
         self._dispatcher_running = False
         self._dispatcher_thread = None
+        self.excutor = ThreadPoolExecutor(max_workers=15)
 
     def __del__(self):
         self.stop()
@@ -168,6 +171,7 @@ class Subscriber(module.Module):
             self._msg_queue.put(None)
             self._dispatcher_thread.join()
             self._dispatcher_thread = None
+        self.excutor.shutdown(wait=False)
 
     @classmethod
     def _msg_recv(cls, self, msg):
@@ -198,11 +202,17 @@ class Subscriber(module.Module):
                                                                                            handler.subject._subject_id))
                     if proto._msg_id == handler.subject._subject_id:
                         handler.subject.decode(proto._data_buf)
-                        handler.subject.exec()
+                        if handler.subject._task is None:
+                            handler.subject._task = self.excutor.submit(handler.subject.exec)
+                        if handler.subject._task.done() is True:
+                            handler.subject._task = self.excutor.submit(handler.subject.exec)
                 elif handler.subject.type == DDS_SUB_TYPE_EVENT:
                     if handler.subject.cmdset == msg.cmdset and handler.subject.cmdid == msg.cmdid:
                         handler.subject.decode(proto._data_buf)
-                        handler.subject.exec()
+                        if handler.subject._task is None:
+                            handler.subject._task = self.excutor.submit(handler.subject.exec)
+                        if handler.subject._task.done() is True:
+                            handler.subject._task = self.excutor.submit(handler.subject.exec)
             self._dds_mutex.release()
             logger.info("Subscriber: _publish, msg is {0}".format(msg))
 
@@ -221,6 +231,7 @@ class Subscriber(module.Module):
         # 添加时间订阅仅 增加 Filter
         subject.set_callback(callback, args[0], args[1])
         handler = SubHandler(self, subject, callback)
+        subject._task = None
         self._dds_mutex.acquire()
         self._publisher[subject.name] = handler
         self._dds_mutex.release()
@@ -235,6 +246,8 @@ class Subscriber(module.Module):
         :return: bool: 调用结果
         """
         # 删除事件订阅仅从 Filter 中删除
+        if self._publisher[subject.name].subject._task.done() is False:
+            self._publisher[subject.name].subject._task.cancel()
         self.del_cmd_filter(subject.cmdset, subject.cmdid)
         return True
 
@@ -257,6 +270,7 @@ class Subscriber(module.Module):
         proto._sub_data_num = 1
         proto._msg_id = self.get_next_subject_id()
         subject._subject_id = proto._msg_id
+        subject._task = None
         proto._sub_uid_list.append(subject.uid)
         return self._send_sync_proto(proto, protocol.host2byte(9, 0))
 
@@ -270,6 +284,8 @@ class Subscriber(module.Module):
                      self._publisher))
         if subject_name in self._publisher:
             subject_id = self._publisher[subject_name].subject._subject_id
+            if self._publisher[subject_name].subject._task.done() is False:
+                self._publisher[subject_name].subject._task.cancel()
             self._dds_mutex.acquire()
             del self._publisher[subject_name]
             self._dds_mutex.release()

@@ -655,7 +655,7 @@ class Chassis(module.Module):
         return sub_dds.del_subject_info(dds.DDS_ESC)
 
     def sub_velocity(self, freq=5, callback=None, *args, **kw):
-        """ 订阅底盘速度信息
+        """ 订阅底盘加速度信息
 
         :param freq: enum:(1, 5, 10, 20, 50) 设置数据订阅数据的推送频率，单位 Hz
         :param callback: 回调函数，返回数据（vgx, vgy, vgz, vbx, vby, vbz)：

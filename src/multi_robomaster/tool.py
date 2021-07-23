@@ -23,6 +23,8 @@ import socket
 import queue
 import threading
 from . import logger
+from robomaster import conn
+from robomaster import config
 
 
 def get_func_name():
@@ -101,6 +103,13 @@ def get_subnets():
         ipinfo = addrs[socket.AF_INET][0]
         address = ipinfo['addr']
         netmask = ipinfo['netmask']
+        broadcast = ipinfo['broadcast']
+
+        # special subnet
+        if config.LOCAL_IP_STR is not None:
+            target_broadcast = config.LOCAL_IP_STR.rsplit('.', 1)[0] + '.255'
+            if target_broadcast != broadcast:
+                continue
 
         # limit range of search. This will work for router subnets
         if netmask != '255.255.255.0':
@@ -158,12 +167,12 @@ class TelloProtocol(object):
         return self._text.encode(self.encoding)
 
     def _decode(self):
-        return self._text.decode(self.encoding)
+        return self._text.decode(self.encoding, 'ignore')
 
 
 class TelloConnection(object):
 
-    def __init__(self, local_ip=socket.gethostbyname(socket.gethostname()), local_port=8889):
+    def __init__(self, local_ip=conn.get_local_ip(), local_port=8889):
         self.local_ip = local_ip
         self.local_port = local_port
         self._sock = None

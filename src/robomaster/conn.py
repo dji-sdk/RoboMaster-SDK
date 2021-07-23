@@ -44,7 +44,10 @@ def get_local_ip():
 
     :return:返回本地ip
     """
-    return socket.gethostbyname(socket.gethostname())
+    if config.LOCAL_IP_STR is not None:
+        return config.LOCAL_IP_STR
+    else:
+        return socket.gethostbyname(socket.gethostname())
 
 
 def get_sn_form_data(data):

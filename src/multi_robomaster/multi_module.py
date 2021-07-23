@@ -756,6 +756,15 @@ class TelloAction(object):
         self.send_command(cmd)
         return self._dispatcher.wait_for_completed(0.5)
 
+    def set_custom_text(self, text='', command_dict=None):
+        cmd_formatter = "EXT {}"
+        self.event.set()
+        if isinstance(command_dict, dict):
+            self._custom_drone_command(command_dict, cmd_formatter)
+        else:
+            cmd = cmd_formatter.format(text)
+            self.send_command(cmd)
+
     def _custom_drone_command(self, command_dict, cmd_formatter):
         command_host_list = []
         if len(command_dict) != len(self.robot_group_host_list):
@@ -767,6 +776,6 @@ class TelloAction(object):
             host = self._robot_sn_dict[sn]
             if host not in self.robot_group_host_list:
                 raise Exception("DRONE id: {0} does not exit in this group".format(_id))
-            cmd = cmd_formatter.format(*command)
+            cmd = cmd_formatter.format(command)
             command_host_list.append([cmd, host])
         self.send_custom_command(command_host_list)
