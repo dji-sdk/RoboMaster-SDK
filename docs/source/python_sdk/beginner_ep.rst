@@ -1,4 +1,4 @@
-﻿.. _beginngerEp:
+﻿.. _beginnerEp:
 
 ################################################
 Getting Started with the RoboMaster SDK - EP
@@ -217,7 +217,7 @@ Example 1: Control the firing of the blaster
 - Use the `fire()` method in the `blaster` object to control the firing of the blaster, the `fire_type` parameter of the method to specify the firing type
   (which can be water bomb or infrared bomb; water bomb is used in this example), and the `times` parameter to set the number of times to fire (1 in this example).::
 
-    ep_balseter.fire(fire_type=balseter.WATER_FIRE, times=1)
+    ep_blaster.fire(fire_type=blaster.WATER_FIRE, times=1)
 
 - Release relevant resources as described in the `Release robot resources`_ section.
 
@@ -238,9 +238,9 @@ Controlling the speed of the chassis is a typical instant control practice. Afte
 - The interface for controlling the chassis belongs to the `chassis` module. Therefore, first obtain the `chassis` object as described in the `Obtain module objects`_ section.
   This example uses method 1 to obtain module objects.::
 
-    ep_chassis= ep_robot.chassis
+    ep_chassis = ep_robot.chassis
 
-- Use the `dirve_speed()` method in the `chassis` object to control the speed of the chassis.
+- Use the `drive_speed()` method in the `chassis` object to control the speed of the chassis.
   The `x`, `y`, and `z` parameters of the method represent the forward, lateral, and rotational speeds respectively. In this example, the `x` forward speed is set to 0.5 m/s.
   The `timeout` parameter is used to specify a timeout period. If no speed control command is received after this period elapses, the SDK instructs the robot to stop.
   In this example, `timeout` is set to 5 seconds, and the speed is set to 0 after the robot moves at the specified speed for 3 seconds.::
@@ -353,7 +353,7 @@ Obtaining video streams collected by the robot is very useful for implementing c
 - The interface for obtaining video streams belongs to the `camera` module. Therefore, first obtain the `camera` object as described in the `Obtain module objects`_ section.
   In this example, the method described in the `Obtain module objects`_ section is used to obtain module objects.::
 
-    ep_camera= ep_robot.camera
+    ep_camera = ep_robot.camera
 
 - The `start_video_stream` method of the `camera` module has two parameters. The `display` parameter specifies whether to display the obtained video streams.
   The `resolution` parameter specifies the size of the video. This example describes two ways to obtain the video stream.
@@ -374,7 +374,7 @@ Obtaining video streams collected by the robot is very useful for implementing c
         cv2.destroyAllWindows()
         ep_camera.stop_video_stream()
 
-  Method 1 directly uses the `start_video_tream()` method of the `camera` object to obtain and play the video stream collected by the robot through the SDK.
+  Method 1 directly uses the `start_video_stream()` method of the `camera` object to obtain and play the video stream collected by the robot through the SDK.
   Method 2 obtains the video stream by using the `start_video_stream` method of the `camera` object and then plays the obtained video stream by using `cv2.inshow()`.
 
 - Release relevant resources as described in the `Release robot resources`_ section.
@@ -403,7 +403,7 @@ This example shows how to obtain the audio stream collected by the robot through
 - The interface for obtaining video streams belongs to the `camera` module. Therefore, first obtain the `camera` object as described in the `Obtain module objects`_ section.
   In this example, the method described in the `Obtain module objects`_ section is used to obtain module objects.::
 
-    ep_camera= ep_robot.camera
+    ep_camera = ep_robot.camera
 
 - Save the obtained audio stream locally by calling the `record_audio()` method of the `camera` module.
   The `save_file` parameter of the method specifies the name of the saved file, the `seconds` parameter specifies the duration of the collected audio stream,
