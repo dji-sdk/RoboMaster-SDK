@@ -49,4 +49,4 @@ In PWM control mode, the input and output of the servo are described as follows.
 Python API
 --------------------------
 
-Refer to :doc:`Servo<./python/servo>`.
+Refer to :doc:`Servo<../python/servo>`.
