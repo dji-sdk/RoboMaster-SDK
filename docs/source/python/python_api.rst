@@ -22,5 +22,5 @@ To facilitate code editing, the PC app is generally used for Python programming.
 
 Reference documents
 -----------------------
-1. `RoboMaster EP Programming Model Manual <https://dl.djicdn.com/downloads/ROBOMASTER_EP/RoboMaster_EP_Programming_Manual_CHS.pdf>`_
+1. `RoboMaster EP Programming Model Manual <https://terra-1-g.djicdn.com/851d20f7b9f64838a34cd02351370894/RM%20EP%20CORE/Scratch%20Programming%20Guide_RoboMaster%20EP%20Core.pdf>`_
 2. :doc:`Python API<../python/apis>`
