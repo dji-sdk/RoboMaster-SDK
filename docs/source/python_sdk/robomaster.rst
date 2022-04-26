@@ -155,6 +155,14 @@ robomaster.version
 robomaster.vision
 ------------------------
 
+.. automodule:: robomaster.ai_module
+   :members:
+   :show-inheritance:
+   :inherited-members:
+
+robomaster.vision
+------------------------
+
 .. automodule:: robomaster.vision
    :members:
    :show-inheritance:
