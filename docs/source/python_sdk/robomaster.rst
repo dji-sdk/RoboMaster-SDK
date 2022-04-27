@@ -160,6 +160,13 @@ robomaster.vision
    :show-inheritance:
    :inherited-members:
 
+robomaster.ai_module
+------------------------
+
+.. automodule:: robomaster.ai_module
+   :members:
+   :show-inheritance:
+   :inherited-members:
 
 Module contents
 ---------------
