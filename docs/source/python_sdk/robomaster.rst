@@ -85,7 +85,6 @@ robomaster.gimbal
    :show-inheritance:
    :inherited-members:
 
-
 robomaster.gripper
 -------------------------
 
@@ -98,9 +97,8 @@ robomaster.led
 ---------------------
 
 .. automodule:: robomaster.led
-   :members: Led, TelloLed
+   :members:
    :show-inheritance:
-   :exclude-members:
    :inherited-members:
 
 robomaster.robot
