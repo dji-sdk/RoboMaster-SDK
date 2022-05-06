@@ -42,4 +42,4 @@ def enable_logging_to_file():
 
 __all__ = ['logger', 'protocol', 'config', 'version', 'action', 'conn', 'client', 'module',
            'robot', 'gimbal', 'chassis', 'gripper', 'blaster', 'camera', 'media', 'flight',
-           'led', 'robotic_arm', 'vision', 'sensor']
+           'led', 'robotic_arm', 'vision', 'sensor', 'ai_module']

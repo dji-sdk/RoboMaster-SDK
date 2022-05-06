@@ -44,7 +44,7 @@ class TelloBatInfoSubject(dds.Subject):
             if protocol.TelloDdsProto.DDS_BATTERY_FLAG in info:
                 self._bat = int(info.split(':')[1])
                 found_info_num += 1
-        if self._info_num == self._info_num:
+        if found_info_num == self._info_num:
             return True
         else:
             logger.debug("TelloBatInfoSubject: decode, found_info_num {0} is not match self._info_num {1}".format(

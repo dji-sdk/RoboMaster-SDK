@@ -12,8 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-
+import random
 import struct
 import binascii
 from abc import abstractmethod
@@ -612,6 +611,28 @@ class ProtoFcSubInfoReq(ProtoData):
             return False
 
 
+class ProtoChassisStickOverlay(ProtoData):
+    _cmdset = 0x3f
+    _cmdid = 0x28
+    _req_size = 1
+
+    def __init__(self):
+        self._mode = 0
+
+    def pack_req(self):
+        buf = bytearray(self._req_size)
+        buf[0] = self._mode
+        return buf
+
+    def unpack_resp(self, buf, offset=0):
+        self._retcode = buf[offset]
+        if self._retcode == 0:
+            return True
+        else:
+            logger.warning("ProtoChassisStickOverlay: unpack_resp, retcode:{0}".format(self._retcode))
+            return False
+
+
 class ProtoGimbalCtrlSpeed(ProtoData):
     _cmdset = 0x4
     _cmdid = 0xc
@@ -688,6 +709,26 @@ class ProtoIrHitEvent(ProtoData):
         self._skill_id = buf[0] & 0xf
         self._recv_dev, self._recv_ir_pin = struct.unpack('<BB', buf[1:])
         self._data_buf = [self._skill_id, self._role_id, self._recv_dev, self._recv_ir_pin]
+        return True
+
+
+class ProtoGameMsgEvent(ProtoData):
+    _cmdset = 0x3f
+    _cmdid = 0xd6
+    _resp_size = 0
+
+    def __init__(self):
+        self._len = 0
+        self._buf = []
+        self._data_buf = None
+
+    def pack_req(self):
+        return b''
+
+    def unpack_req(self, buf, offset=0):
+        self._len = buf[1]
+        self._buf = buf[2:]
+        self._data_buf = [self._len, self._buf]
         return True
 
 
@@ -983,6 +1024,64 @@ class ProtoSdkHeartBeat(ProtoData):
             return True
         else:
             return False
+
+
+class ProtoAiModuleEvent(ProtoData):
+    _cmdset = 0x3f
+    _cmdid = 0xea
+    _resp_size = 0
+
+    def __init__(self):
+        self._id = 0
+        self._x = 0
+        self._y = 0
+        self._w = 0
+        self._h = 0
+        self._c = 0
+        self._info = []
+        self._num = 0
+        self._data_buf = None
+
+    def pack_req(self):
+        return b''
+
+    def unpack_req(self, buf, offset=0):
+        self._len = len(buf)-15
+        self._num = round(self._len/8)
+        for i in range(0, self._num):
+            self._id, self._x, self._y, self._w, self._h, self._c = struct.unpack('<BHBHBB', buf[13+i*8:21+i*8])
+            self._info.append([self._id, self._x, self._y, self._w, self._h, self._c])
+        self._data_buf = self._num, self._info
+        return True
+
+
+class ProtoUwbModuleEvent(ProtoData):
+    _cmdset = 0x3f
+    _cmdid = 0xdb
+    _resp_size = 0
+
+    def __init__(self):
+        self._id = 0
+        self._pox_x = 0
+        self._pox_y = 0
+        self._pox_z = 0
+        self._vel_x = 0
+        self._vel_y = 0
+        self._vel_z = 0
+        self._eop_x = 0
+        self._eop_y = 0
+        self._eop_z = 0
+        self._data_buf = None
+
+    def pack_req(self):
+        return b''
+
+    def unpack_req(self, buf, offset=0):
+        self._id, self._pox_x, self._pox_y, self._pox_z, self._vel_x, self._vel_y,\
+            self._vel_z, self._eop_x, self._eop_y, self._eop_z = struct.unpack('<BffffffBBB', buf)
+        self._data_buf = [self._id, self._pox_x, self._pox_y, self._pox_z, self._vel_x, self._vel_y,
+                          self._vel_z, self._eop_x, self._eop_y, self._eop_z]
+        return True
 
 
 class ProtoGimbalSetWorkMode(ProtoData):
@@ -2023,6 +2122,47 @@ class ProtoRoboticArmMovePush(ProtoData):
         self._percent = buf[1 + offset]
         self._action_state = buf[2 + offset] & 0x3
         self._x, self._y = struct.unpack_from('<ii', buf, 3 + offset)
+        return True
+
+
+class ProtoRoboticAiInit(ProtoData):
+    _cmdset = 0x3f
+    _cmdid = 0xe9
+    _req_size = 17
+
+    def __init__(self):
+        self._addr = 0x0103
+        self._sender = 0x0103
+        self._reciver = 0x0301
+        self._seq_num = random.randint(0, 1000)
+        self._cmd = 0x020d
+        self._attr = 0
+
+    def pack_req(self):
+        self._buf = bytearray(self._req_size)
+        self._len = 2
+        self._buf[0] = 0xAA
+        self._buf[1] = self._len & 0xff
+        self._buf[2] = (self._len >> 8)
+        crc_h = algo.crc8_calc(self._buf[0:3], 0x11)
+        self._buf[3] = crc_h
+        self._buf[4] = self._sender & 0xff
+        self._buf[5] = (self._sender >> 8)
+        self._buf[6] = self._reciver & 0xff
+        self._buf[7] = (self._reciver >> 8)
+        self._buf[8] = self._attr
+        self._buf[9] = self._seq_num & 0xff
+        self._buf[10] = (self._seq_num >> 8)
+        self._buf[11] = self._cmd & 0xff
+        self._buf[12] = (self._cmd >> 8)
+        self._buf[13] = self._addr & 0xff
+        self._buf[14] = (self._addr >> 8)
+        crc_H = algo.crc16_calc(self._buf[0:self._req_size - 2], 0x4F19)
+        self._buf[15] = crc_H & 0xff
+        self._buf[16] = crc_H >> 8
+        return self._buf
+
+    def unpack_req(self, buf, offset=0):
         return True
 
 

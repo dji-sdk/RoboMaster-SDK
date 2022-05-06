@@ -349,6 +349,15 @@ class Chassis(module.Module):
         proto = protocol.ProtoChassisGetWorkMode()
         return self._send_sync_proto(proto)
 
+    def stick_overlay(self, fusion_mode=0):
+        """ 设置底盘的杆量叠加模式
+        :param fusion_mode: int:[0,1,2]  0 = 关闭SDK的杆量叠加, 1 = 使能杆量叠加,速度正方向为车身坐标系, 2 = 使能SDK模式,速度正方向为云台朝向
+        :return: bool:调用结果
+        """
+        proto = protocol.ProtoChassisStickOverlay()
+        proto._mode = fusion_mode
+        return self._send_sync_proto(proto)
+
     # drives.
     def drive_wheels(self, w1=0, w2=0, w3=0, w4=0, timeout=None):
         """　设置麦轮转速
@@ -408,12 +417,12 @@ class Chassis(module.Module):
     def set_pwm_value(self, pwm1=None, pwm2=None, pwm3=None, pwm4=None, pwm5=None, pwm6=None):
         """ 设置PWM输出占空比
 
-        :param pwm1: int:[0,1000]，pwm输出占空比，单位‰
-        :param pwm2: int:[0,1000]，pwm输出占空比，单位‰
-        :param pwm3: int:[0,1000]，pwm输出占空比，单位‰
-        :param pwm4: int:[0,1000]，pwm输出占空比，单位‰
-        :param pwm5: int:[0,1000]，pwm输出占空比，单位‰
-        :param pwm6: int:[0,1000]，pwm输出占空比，单位‰
+        :param pwm1: int:[0,100]，pwm输出占空比，单位%
+        :param pwm2: int:[0,100]，pwm输出占空比，单位%
+        :param pwm3: int:[0,100]，pwm输出占空比，单位%
+        :param pwm4: int:[0,100]，pwm输出占空比，单位%
+        :param pwm5: int:[0,100]，pwm输出占空比，单位%
+        :param pwm6: int:[0,100]，pwm输出占空比，单位%
         """
         proto = protocol.ProtoChassisPwmPercent()
         proto._mask = 0

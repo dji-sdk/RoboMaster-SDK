@@ -213,6 +213,32 @@ class TelloCamera(Camera):
             logger.warning("Drone: set_resilution, send_sync_msg exception {0}".format(str(e)))
             return False
 
+    def set_down_vision(self, setting):
+        """设置飞机图像源
+
+        :param direction: 需要设置的图像源，[1, 0]
+        :return: 设置结果
+        """
+        cmd = "downvision {0}".format(setting)
+        print("cmd", cmd)
+        proto = protocol.TextProtoDrone()
+        proto.text_cmd = cmd
+        msg = protocol.TextMsg(proto)
+        try:
+            resp_msg = self._client.send_sync_msg(msg)
+            if resp_msg:
+                proto = resp_msg.get_proto()
+                if proto:
+                    if proto.resp.lower().startswith(protocol.TextProtoData.SUCCESSFUL_RESP_FLAG):
+                        return True
+                    else:
+                        logger.warning("Drone: resp {0}".format(proto.resp))
+                logger.error("Drone: set_down_vision failed")
+            return False
+        except Exception as e:
+            logger.error("Drone: set_down_vision, send_sync_msg exception {0}".format(str(e)))
+            return False
+
 
 class EPCamera(module.Module, Camera):
     """ EP 摄像机模块 """

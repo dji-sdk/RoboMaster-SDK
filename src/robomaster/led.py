@@ -20,7 +20,7 @@ from . import logger
 from . import util
 
 
-__all__ = ['Led', 'TelloLed', 'COMP_TOP_LEFT', 'COMP_TOP_RIGHT', 'COMP_BOTTOM_LEFT', 'COMP_BOTTOM_RIGHT',
+__all__ = ['Led', 'COMP_TOP_LEFT', 'COMP_TOP_RIGHT', 'COMP_BOTTOM_LEFT', 'COMP_BOTTOM_RIGHT',
            'COMP_BOTTOM_FRONT', 'COMP_BOTTOM_BACK', 'COMP_BOTTOM_ALL', 'COMP_TOP_ALL', 'COMP_ALL',
            'EFFECT_ON', 'EFFECT_OFF', 'EFFECT_PULSE', 'EFFECT_FLASH', 'EFFECT_BREATH',
            'EFFECT_SCROLLING']

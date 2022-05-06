@@ -120,5 +120,5 @@ class Module(metaclass=_AutoRegisterModule):
         try:
             return self._client.send_async_msg(msg)
         except Exception as e:
-            logger.warning("{0}: _send_async_proto, proto:{1}, exception:{2}".format(self.__class__.__name__, proto, e))
+            logger.error("{0}: _send_async_proto, proto:{1}, exception:{2}".format(self.__class__.__name__, proto, e))
             return False

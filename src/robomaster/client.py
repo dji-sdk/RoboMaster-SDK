@@ -65,7 +65,7 @@ class Client(object):
             try:
                 self._conn = conn.Connection(config.ROBOT_DEFAULT_LOCAL_WIFI_ADDR,
                                              config.ROBOT_DEFAULT_WIFI_ADDR,
-                                             protocol=config.DEFAULT_PROTO_TYPE)
+                                             protocol=config.DEFAULT_CONN_PROTO)
             except Exception as e:
                 logger.error('Client: __init__, create Connection, exception: {0}'.format(e))
                 self._conn = None
@@ -89,7 +89,10 @@ class Client(object):
 
     @property
     def remote_addr(self):
-        return self._conn.target_addr if self._conn else None
+        try:
+            return self._conn.target_addr
+        except Exception:
+            raise print('Robot: Can not connect to robot, check connection please.')
 
     def add_handler(self, obj, name, f):
         self._dispatcher.add_handler(obj, name, f)
@@ -126,7 +129,7 @@ class Client(object):
             raise e
 
     def stop(self):
-        if self._thread and self._thread.is_alive():
+        if self._thread.is_alive():
             self._running = False
             proto = protocol.ProtoGetVersion()
             msg = protocol.Msg(self.hostbyte, self.hostbyte, proto)

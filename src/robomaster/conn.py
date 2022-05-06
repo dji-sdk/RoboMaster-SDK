@@ -22,7 +22,6 @@ import queue
 import random
 import time
 import base64
-import errno
 from ftplib import FTP
 from . import algo
 from . import protocol
@@ -81,24 +80,15 @@ def scan_robot_ip(user_sn=None, timeout=3.0):
                 end = time.time()
                 if end - start > timeout:
                     break
-
-                try:
-                    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                    s.bind(("0.0.0.0", config.ROBOT_BROADCAST_PORT))
-                    s.settimeout(1)
-                    data, ip = s.recvfrom(1024)
-                    recv_sn = get_sn_form_data(data)
-                    logger.info("conn: scan_robot_ip, data:{0}, ip:{1}".format(recv_sn, ip))
-                    if recv_sn == user_sn:
-                        robot_ip = ip[0]
-                        find_robot = True
-                except socket.error as error:
-                    # If multiple processes trying to connected to different
-                    # RoboMasters are started at the same time, the socket will
-                    # not be able to bind. In that case, try again until timeout.
-                    if not error.errno == errno.EADDRINUSE:
-                        raise
-
+                s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                s.bind(("0.0.0.0", config.ROBOT_BROADCAST_PORT))
+                s.settimeout(1)
+                data, ip = s.recvfrom(1024)
+                recv_sn = get_sn_form_data(data)
+                logger.info("conn: scan_robot_ip, data:{0}, ip:{1}".format(recv_sn, ip))
+                if recv_sn == user_sn:
+                    robot_ip = ip[0]
+                    find_robot = True
             if robot_ip:
                 return robot_ip
             else:

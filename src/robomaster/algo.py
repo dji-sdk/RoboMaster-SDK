@@ -69,15 +69,13 @@ crc16_table = [
 ]
 
 
-def crc8_calc(data):
-    crc = 0x77
+def crc8_calc(data, crc=0x77):
     for t in range(0, len(data)):
         crc = crc8_table[crc ^ data[t]]
     return crc
 
 
-def crc16_calc(data):
-    crc = 0x3692
+def crc16_calc(data, crc=0x3692):
     for t in range(0, len(data)):
         crc = ((crc >> 8) & 0xff) ^ crc16_table[((crc ^ data[t]) & 0xff)]
     return crc

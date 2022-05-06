@@ -49,11 +49,13 @@ DDS_PINBOARD = "pinboard"
 
 DDS_TELLO_ATTITUDE = "tello_attitude"
 DDS_TELLO_BATTERY = "tello_battery"
+DDS_TELLO_AI = "tello_ai"
 DDS_TELLO_TEMP = "tello_temperature"
 DDS_TELLO_IMU = "tello_imu"
 DDS_TELLO_TOF = "tello_tof"
 DDS_TELLO_DRONE = "tello_drone"
 DDS_TELLO_ALL = "tello_all"
+IS_AI_FLAG = ";degree:"
 TELLO_DDS_TIME_MAX = 666
 
 SUB_UID_MAP = {
@@ -246,7 +248,9 @@ class Subscriber(module.Module):
         :return: bool: 调用结果
         """
         # 删除事件订阅仅从 Filter 中删除
-        if self._publisher[subject.name].subject._task.done() is False:
+        if self._publisher[subject.name].subject._task is None:
+            pass
+        elif self._publisher[subject.name].subject._task.done() is False:
             self._publisher[subject.name].subject._task.cancel()
         self.del_cmd_filter(subject.cmdset, subject.cmdid)
         return True
@@ -324,7 +328,10 @@ class TelloSubscriber(object):
 
     @classmethod
     def _msg_recv(cls, self, msg):
-        if protocol.TextMsg.IS_DDS_FLAG in msg.get_proto().resp:
+        if protocol.TextMsg.IS_DDS_FLAG in msg.get_proto().resp or IS_AI_FLAG in msg.get_proto().resp:
+            '''
+            此处判断两个标志位，满足任意一个进入条件
+            '''
             self._msg = msg
 
     def _dispatch_task(self):
@@ -332,6 +339,7 @@ class TelloSubscriber(object):
         logger.info("TelloSubscriber: dispatcher_task is running...")
         interval = 1 / protocol.TelloDdsProto.DDS_FREQ
         time_count = 0
+
         while self._dispatcher_running:
             msg = self._msg
             if msg is None:

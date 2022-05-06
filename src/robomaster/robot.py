@@ -42,6 +42,7 @@ from . import gripper
 from . import armor
 from . import flight
 from . import uart
+from . import ai_module
 
 __all__ = ['Robot', 'RobotPlaySoundAction', 'Drone', 'FREE', 'GIMBAL_LEAD', 'CHASSIS_LEAD',
            'SOUND_ID_ATTACK', 'SOUND_ID_SHOOT', 'SOUND_ID_SCANNING', 'SOUND_ID_RECOGNIZED',
@@ -59,6 +60,7 @@ MODULE_BLASTER = 'blaster'
 MODULE_DDS = 'dds'
 MODULE_DISTANCE_SENSOR = 'dis_sensor'
 MODULE_ROBOTIC_ARM = 'robotic_arm'
+MODULE_AI_MODULE = 'ai_module'
 
 FREE = "free"
 GIMBAL_LEAD = "gimbal_lead"
@@ -300,18 +302,19 @@ class TelloStatusSubject(dds.Subject):
     def decode(self, buf):
         """ 根据数据推送更新 drone 的状态数据
         """
-        push_data_list = buf.split(';')
-        for info in push_data_list:
-            if ':' not in info:
-                continue
-            name, data = info.split(':')
-            if name == self._dds_proto.DDS_PAD_MPRY_FLAG:
-                pad_mpry_info = data.split(',')
-                self._status_dict[name].clear()
-                for i in range(self._pad_mpry_num):
-                    self._status_dict[name].append(float(pad_mpry_info[i]))
-            else:
-                self._status_dict[name] = float(data)
+        if dds.IS_AI_FLAG not in buf:
+            push_data_list = buf.split(';')
+            for info in push_data_list:
+                if ':' not in info:
+                    continue
+                name, data = info.split(':')
+                if name == self._dds_proto.DDS_PAD_MPRY_FLAG:
+                    pad_mpry_info = data.split(',')
+                    self._status_dict[name].clear()
+                    for i in range(self._pad_mpry_num):
+                        self._status_dict[name].append(float(pad_mpry_info[i]))
+                else:
+                    self._status_dict[name] = float(data)
 
     @property
     def freq(self):
@@ -391,6 +394,10 @@ class Drone(RobotBase):
     def led(self):
         return self.get_module("TelloLed")
 
+    @property
+    def ai_module(self):
+        return self.get_module("TelloAI")
+
     def get_module(self, name):
         return self._modules[name]
 
@@ -398,6 +405,7 @@ class Drone(RobotBase):
         _flight = flight.Flight(self)
         _camera = camera.TelloCamera(self)
         _battery = battery.TelloBattery(self)
+        _ai_module = ai_module.TelloAI(self)
         _dds = dds.TelloSubscriber(self)
         _dds.start()
         _sensor = sensor.TelloDistanceSensor(self)
@@ -410,6 +418,7 @@ class Drone(RobotBase):
         self._modules[_flight.__class__.__name__] = _flight
         self._modules[_camera.__class__.__name__] = _camera
         self._modules[_battery.__class__.__name__] = _battery
+        self._modules[_ai_module.__class__.__name__] = _ai_module
         self._modules[_dds.__class__.__name__] = _dds
         self._modules[_sensor.__class__.__name__] = _sensor
         self._modules[_led.__class__.__name__] = _led
@@ -1145,7 +1154,7 @@ class Robot(RobotBase):
 
     @property
     def ip(self):
-        return self.client.remote_addr[0] if self.client.remote_addr else None
+        return self.client.remote_addr[0]
 
     @property
     def conn_type(self):
@@ -1224,6 +1233,10 @@ class Robot(RobotBase):
         return self.get_module("Uart")
 
     @property
+    def ai_module(self):
+        return self.get_module("AiModule")
+
+    @property
     def is_initialized(self):
         return self._initialized
 
@@ -1245,6 +1258,7 @@ class Robot(RobotBase):
         _armor = armor.Armor(self)
         _uart = uart.Uart(self)
         _uart.start()
+        _ai_module = ai_module.AiModule(self)
 
         self._modules[_gimbal.__class__.__name__] = _gimbal
         self._modules[_chassis.__class__.__name__] = _chassis
@@ -1261,6 +1275,7 @@ class Robot(RobotBase):
         self._modules[_gripper.__class__.__name__] = _gripper
         self._modules[_armor.__class__.__name__] = _armor
         self._modules[_uart.__class__.__name__] = _uart
+        self._modules[_ai_module.__class__.__name__] = _ai_module
 
     def get_module(self, name):
         """ 获取模块对象
@@ -1298,7 +1313,7 @@ class Robot(RobotBase):
             self._client.start()
         except Exception as e:
             logger.error("Robot: Connection Create Failed.")
-            return False
+            raise e
 
         self._action_dispatcher = action.ActionDispatcher(self.client)
         self._action_dispatcher.initialize()
