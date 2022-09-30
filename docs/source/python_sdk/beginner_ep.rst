@@ -180,7 +180,7 @@ _______________________
 
 - 利用 `释放机器人资源`_ 章节的介绍释放相关资源
 
-示例程序中提供了一个完整的设置装甲灯的例程 :file:`/examples/01_robot/09_set_mode.py`，
+示例程序中提供了一个完整的设置装甲灯的例程 :file:`/examples/01_robot/07_led.py`，
 例程中利用了for循环，实现了led灯的8次颜色变换，每次维持1秒钟
 
 .. literalinclude:: ./../../../examples/07_led/01_set_led.py
