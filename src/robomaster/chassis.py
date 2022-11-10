@@ -498,7 +498,7 @@ class Chassis(module.Module):
 
                         :x: x轴方向距离，单位 m
                         :y: y轴方向距离，单位 m
-                        :z: z轴方向旋转角度，单位 °
+                        :z: z轴方向距离，单位 m
 
         :param args: 可变参数
         :param kw: 关键字参数
