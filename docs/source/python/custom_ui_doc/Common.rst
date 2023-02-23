@@ -212,7 +212,7 @@ The methods described in this section are applicable to all custom UI controls e
     # When the my_Button control is clicked, the information will be output to the console, and the robot will shoot once.
 
     def button_callback(widget,*args,**kw):
-        print('the button is clicked and the button's name is '+ widget.get_name())
+        print("the button is clicked and the button's name is "+ widget.get_name())
         gun_ctrl.fire_once()
     my_Button.callback_register('on_click',button_callback)
 ..
