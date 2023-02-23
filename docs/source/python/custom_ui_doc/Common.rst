@@ -212,7 +212,7 @@ Common
     # 当 my_Button 控件被点击后，打印信息到控制台上，机器人会开枪射击一次
 
     def button_callback(widget,*args,**kw):
-        print('the button is clicked and the button's name is '+ widget.get_name())
+        print("the button is clicked and the button's name is "+ widget.get_name())
         gun_ctrl.fire_once()
     my_Button.callback_register('on_click',button_callback)
 ..
