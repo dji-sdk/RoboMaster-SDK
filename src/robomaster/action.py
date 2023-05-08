@@ -241,8 +241,11 @@ class TextAction(Action):
             self._changeto_state(ACTION_SUCCEEDED)
         elif proto_state == 'error':
             self._changeto_state(ACTION_FAILED)
+            self._failure_reason = proto_state
             logger.error("TextAction: action failed ! resp: {0}".format(proto_state))
         else:
+            self._changeto_state(ACTION_FAILED)
+            self._failure_reason = proto_state
             logger.error("TextAction: action failed ! resp: {0}".format(proto_state))
 
     def make_action_key(self):
