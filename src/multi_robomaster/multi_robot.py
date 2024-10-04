@@ -18,6 +18,7 @@ import sys
 import time
 import random
 import threading
+import socket
 from robomaster import protocol
 from robomaster import conn
 from robomaster import robot
@@ -161,6 +162,7 @@ class MultiEP(MultiRobotBase):
     """ S1_EP"""
     def __init__(self):
         super().__init__()
+        self._port_list = []
 
     def initialize(self, proto_type=config.DEFAULT_PROTO_TYPE):
         """scan all robots and init its
@@ -193,7 +195,23 @@ class MultiEP(MultiRobotBase):
                 proto._ip = config.LOCAL_IP_STR
             else:
                 proto._ip = '0.0.0.0'
-            proto._port = random.randint(config.ROBOT_SDK_PORT_MIN, config.ROBOT_SDK_PORT_MAX)
+
+            while True:
+                port = random.randint(config.ROBOT_SDK_PORT_MIN, config.ROBOT_SDK_PORT_MAX)
+                if port not in self._port_list:
+                    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                        logger.info(port,proto._ip,s.connect_ex((proto._ip, port)))
+                        if s.connect_ex((proto._ip, port)) != 0:
+                            self._port_list.append(port)
+                            proto._port = port
+                            logger.info("Set up port: {0}".format(proto._port))
+                            break
+                        else:
+                            logger.info("port {0} are using".format(port))
+                else:
+                    logger.info("Repeated port: {0}".format(port))
+            # proto._port = random.randint(config.ROBOT_SDK_PORT_MIN, config.ROBOT_SDK_PORT_MAX)
+
             msg = protocol.Msg(robot.ROBOT_DEFAULT_HOST, protocol.host2byte(9, 0), proto)
             result, local_ip = sdk_conn.switch_remote_route(msg, proxy_addr)
             proto._ip = local_ip
